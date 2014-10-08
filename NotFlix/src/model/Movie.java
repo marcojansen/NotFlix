@@ -2,6 +2,7 @@ package model;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 public class Movie {
@@ -24,7 +25,7 @@ public class Movie {
 		this.shortDesc = shortDesc;
 	}
 	
-	@XmlAttribute
+	@XmlTransient
 	public int getId() {
 		return id;
 	}
@@ -56,7 +57,7 @@ public class Movie {
 	public void setShortDesc(String shortDesc) {
 		this.shortDesc = shortDesc;
 	}
-
+	@XmlAttribute
 	public String getImdb() {
 		return imdb;
 	}

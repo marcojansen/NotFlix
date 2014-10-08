@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -25,6 +26,19 @@ public class Movies {
 		
 		if(model != null){
 			return model.getMovies();
+		}
+		return null;
+	}
+
+	@GET
+	@Path("{id}")
+	@Produces({MediaType.APPLICATION_XML})
+	public Movie getMovie(@PathParam("id") String id) {
+		Model model = (Model) context.getAttribute("Model");
+		for (Movie movie : model.getMovies()) {
+			if (movie.getImdb().equals(id)) {
+				return movie;
+			}
 		}
 		return null;
 	}
