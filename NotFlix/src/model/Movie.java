@@ -1,5 +1,6 @@
 package model;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -23,16 +24,9 @@ public class Movie {
 		this.shortDesc = shortDesc;
 	}
 	
+	@XmlAttribute
 	public int getId() {
 		return id;
-	}
-	
-	public static int getCurID() {
-		return curID;
-	}
-
-	public static void setCurID(int curID) {
-		Movie.curID = curID;
 	}
 
 	public void setId(int id) {
