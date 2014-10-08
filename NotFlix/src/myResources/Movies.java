@@ -19,9 +19,10 @@ public class Movies {
 	@Context ServletContext context;
 	
 	@GET
-	@Produces({MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_XML })
 	public ArrayList<Movie> getMovies() {
 		Model model = (Model) context.getAttribute("Model");
+		
 		if(model != null){
 			return model.getMovies();
 		}

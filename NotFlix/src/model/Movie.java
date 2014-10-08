@@ -9,7 +9,9 @@ public class Movie {
 	private int id, length;
 	private String imdb, title, date, director, shortDesc;
 	
-	public Movie() {}
+	public Movie() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Movie(String imdb, String title, String date, int length, String director, String shortDesc) {
 		this.id = ++curID;
@@ -25,6 +27,42 @@ public class Movie {
 		return id;
 	}
 	
+	public static int getCurID() {
+		return curID;
+	}
+
+	public static void setCurID(int curID) {
+		Movie.curID = curID;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public void setImdb(String imdb) {
+		this.imdb = imdb;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public void setShortDesc(String shortDesc) {
+		this.shortDesc = shortDesc;
+	}
+
 	public String getImdb() {
 		return imdb;
 	}
