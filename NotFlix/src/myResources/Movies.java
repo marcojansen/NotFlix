@@ -1,6 +1,6 @@
 package myResources;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
@@ -19,7 +19,7 @@ public class Movies {
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML})
-	public Set<Movie> getMovies() {
+	public ArrayList<Movie> getMovies() {
 		Model model = (Model) context.getAttribute("Model");
 		if(model != null){
 			return model.getMovies();

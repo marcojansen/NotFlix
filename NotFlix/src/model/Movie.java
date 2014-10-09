@@ -2,7 +2,7 @@ package model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name = "pietje precies")
 public class Movie {
 	
 	private static int curID = 0;
