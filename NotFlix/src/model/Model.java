@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-
 public class Model {
 	
 	ArrayList<Movie> movies = new ArrayList<Movie>();

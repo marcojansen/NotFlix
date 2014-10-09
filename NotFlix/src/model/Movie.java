@@ -4,7 +4,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement(name = "pietje precies")
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@XmlRootElement
 public class Movie {
 	
 	private static int curID = 0;
@@ -26,6 +28,7 @@ public class Movie {
 	}
 	
 	@XmlTransient
+	@JsonIgnore
 	public int getId() {
 		return id;
 	}
