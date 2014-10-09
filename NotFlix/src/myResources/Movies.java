@@ -19,7 +19,7 @@ public class Movies {
 	@Context ServletContext context;
 	
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
 	public ArrayList<Movie> getMovies() {
 		Model model = (Model) context.getAttribute("Model");
 		
@@ -31,7 +31,7 @@ public class Movies {
 
 	@GET
 	@Path("{id}")
-	@Produces({MediaType.APPLICATION_XML})
+	@Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
 	public Movie getMovie(@PathParam("id") String id) {
 		Model model = (Model) context.getAttribute("Model");
 		for (Movie movie : model.getMovies()) {
