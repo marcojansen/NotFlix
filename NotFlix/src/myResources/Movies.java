@@ -41,5 +41,14 @@ public class Movies {
 		}
 		return null;
 	}
+	
+	@GET
+	@Path("/rated")
+	@Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
+	public ArrayList<Movie> getRatedMovies() {
+		Model model = (Model) context.getAttribute("Model");
+		
+		return model.getRatedMovies();
+	}
 
 }
