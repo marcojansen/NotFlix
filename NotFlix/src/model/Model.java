@@ -23,4 +23,57 @@ public class Model {
 		return false;
 	}
 
+	public ArrayList<Movie> getRatedMovies() {
+		//TODO
+		return movies;
+	}
+	
+	public User addUser(String firstName, String insert, String lastName, String nickName
+			,String password) {
+		for (User user : users) {
+			if (user.getNickName().equals(nickName)) {
+				return null;
+			}
+		}
+		User user = new User(firstName, insert, lastName, nickName, password);
+		users.add(user);
+		return user;
+	}
+	
+	public User login(String nickname, String password) {
+		for (User user: users) {
+			if (user.getNickName().equals(nickname) && user.getPassword().equals(password)) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<User> getUsers(String token) {
+		for (User user : users) {
+			if (token.equals(user.getToken())) {
+				return users;
+			}
+		}
+		return new ArrayList<User>();
+	}
+	
+	private User getUserByNickname(String nickname) {
+		for (User user: users) {
+			if (user.getNickName().equals(nickname)) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
+	public User getUser(String nickname, String token) {
+		for (User user: users) {
+			if (token.equals(user.getToken())) {
+				return getUserByNickname(nickname);
+			}
+		}
+		return null;
+	}
+
 }
