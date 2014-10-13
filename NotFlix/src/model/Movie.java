@@ -1,5 +1,8 @@
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -12,10 +15,9 @@ public class Movie {
 	private static int curID = 0;
 	private int id, length;
 	private String imdb, title, date, director, shortDesc;
+	private Map<User, Rating> ratings = new HashMap<User, Rating>();
 	
-	public Movie() {
-		// TODO Auto-generated constructor stub
-	}
+	public Movie() {}
 	
 	public Movie(String imdb, String title, String date, int length, String director, String shortDesc) {
 		this.id = ++curID;
@@ -85,4 +87,18 @@ public class Movie {
 	public String getShortDesc() {
 		return shortDesc;
 	}
+	
+	public boolean addRating(Rating rating, User user){
+		if(ratings.get(user) != null){
+			ratings.put(user, rating);
+			return true;
+		}
+		return false;
+	}
+	
+	public Map<User, Rating> getRatings() {
+		return ratings;
+	}
+	
+	
 }

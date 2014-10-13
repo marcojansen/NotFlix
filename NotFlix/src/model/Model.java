@@ -15,5 +15,12 @@ public class Model {
 	public ArrayList<Movie> getMovies() {
 		return movies;
 	}
+	
+	public boolean addRating(Movie movie, int rating, User user){
+		if(movies.contains(movie) && rating > 0 && rating <= 10){
+			return movie.addRating(new Rating(rating, movie.getId()), user);
+		}
+		return false;
+	}
 
 }
