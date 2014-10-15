@@ -22,24 +22,7 @@ public class Movies {
 	@Produces({ MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
 	public ArrayList<Movie> getMovies() {
 		Model model = (Model) context.getAttribute("Model");
-		
-		if(model != null){
-			return model.getMovies();
-		}
-		return null;
-	}
-
-	@GET
-	@Path("{id}")
-	@Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-	public Movie getMovie(@PathParam("id") String id) {
-		Model model = (Model) context.getAttribute("Model");
-		for (Movie movie : model.getMovies()) {
-			if (movie.getImdb().equals(id)) {
-				return movie;
-			}
-		}
-		return null;
+		return model.getMovies();
 	}
 	
 	@GET
@@ -47,7 +30,6 @@ public class Movies {
 	@Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
 	public ArrayList<Movie> getRatedMovies() {
 		Model model = (Model) context.getAttribute("Model");
-		
 		return model.getRatedMovies();
 	}
 
