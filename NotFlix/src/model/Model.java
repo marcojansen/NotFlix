@@ -10,6 +10,8 @@ public class Model {
 	public Model() {
 		movies.add(new Movie("1234", "Breaking Bad", "2012", 138, "Steven Seagal", "Deze film is een serie"));
 		movies.add(new Movie("1235","Breaking Good","2013",140,"Steven Seagul","Dit is een test"));
+		users.add(new User("marco", "", "jansen", "marco", "jansen"));
+		users.add(new User("daan", "", "veldhof", "daan", "veldhof"));
 	}
 	
 	public ArrayList<Movie> getMovies() {
