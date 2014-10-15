@@ -30,7 +30,13 @@ public class Model {
 	}
 
 	public ArrayList<Movie> getRatedMovies() {
-		return movies;
+		ArrayList<Movie> ratedMovies = new ArrayList<Movie>();
+		for (Movie movie: movies) {
+			if (movie.getAverageRating() != 0.0) {
+				ratedMovies.add(movie);
+			}
+		}
+		return ratedMovies;
 	}
 	
 	public Token addUser(String firstName, String insert, String lastName, String nickName
