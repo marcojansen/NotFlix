@@ -88,6 +88,8 @@ public class User {
 		return nickName;
 	}
 
+	@XmlTransient
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}

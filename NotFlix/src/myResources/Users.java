@@ -44,7 +44,7 @@ public class Users {
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ArrayList<User> getUsers(@HeaderParam("token") String token) {
+	public ArrayList<User> getUsers(@HeaderParam("Token") String token) {
 		Model model = (Model) context.getAttribute("Model");
 		return model.getUsers(token);
 	}
@@ -52,7 +52,7 @@ public class Users {
 	@GET
 	@Path("{nickname}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public User getUser(@HeaderParam("token") String token, @PathParam("nickname") String nickname) {
+	public User getUser(@HeaderParam("Token") String token, @PathParam("nickname") String nickname) {
 		Model model = (Model) context.getAttribute("Model");
 		return model.getUser(nickname, token);
 	}
