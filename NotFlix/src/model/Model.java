@@ -39,8 +39,7 @@ public class Model {
 		return ratedMovies;
 	}
 	
-	public Token addUser(String firstName, String insert, String lastName, String nickName
-			,String password) {
+	public Token addUser(String firstName, String insert, String lastName, String nickName ,String password) {
 		for (User user : users) {
 			if (user.getNickName().equals(nickName)) {
 				return null;
@@ -78,7 +77,7 @@ public class Model {
 		return false;
 	}
 	
-	public User getUserByToken(String token){
+	private User getUserByToken(String token){
 		for(User user : users){
 			if(user.getToken().getToken().equals(token)){
 				return user;
@@ -119,6 +118,15 @@ public class Model {
 		User user = getUserByToken(token);
 		if(movie != null && user != null){
 			return movie.addRating(new Rating(score, movie.getId()), user);
+		}
+		return false;
+	}
+	
+	public boolean deleteRating(String imdbId, String token) {
+		Movie movie = getMovie(imdbId);
+		User user = getUserByToken(token);
+		if(movie != null && user != null){
+			return movie.deleteRating(user);
 		}
 		return false;
 	}

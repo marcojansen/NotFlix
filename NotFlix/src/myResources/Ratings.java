@@ -42,12 +42,13 @@ public class Ratings {
 				response.flushBuffer();
 				return;
 			} catch (IOException e) {}
+		}else{
+			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+			try {
+				response.flushBuffer();
+				return;
+			} catch (IOException e) {}
 		}
-		response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-		try {
-			response.flushBuffer();
-			return;
-		} catch (IOException e) {}
 	}
 	
 	@PUT
@@ -78,9 +79,29 @@ public class Ratings {
 	
 	@DELETE
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void deleteRating(@FormParam("imdb") String imdb, @HeaderParam("Token") String token) {
+	public void deleteRating(@FormParam("imdb") String imdb, @HeaderParam("Token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		//TODO model.deleteRating(token,imdb);
+		if(!model.isUser(token)){
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+				return;
+			} catch (IOException e) {}
+		}
+		boolean deleted = model.deleteRating(imdb, token);
+		if(deleted){
+			response.setStatus(HttpServletResponse.SC_ACCEPTED);
+			try {
+				response.flushBuffer();
+				return;
+			} catch (IOException e) {}
+		}else{
+			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+			try {
+				response.flushBuffer();
+				return;
+			} catch (IOException e) {}
+		}
 	}
 	
 	/**

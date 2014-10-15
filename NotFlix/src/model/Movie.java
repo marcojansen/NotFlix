@@ -130,6 +130,13 @@ public class Movie {
 	public Map<User, Rating> getRatings() {
 		return ratings;
 	}
+
+	public boolean deleteRating(User user) {
+		if(ratings.get(user) != null){
+			ratings.remove(user);
+		}
+		return true;
+	}
 	
 	
 }
