@@ -1,7 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,6 +16,7 @@ public class Movie {
 	
 	private static int curID = 0;
 	private int id, length;
+	private double averageRating;
 	private String imdb, title, date, director, shortDesc;
 	private Map<User, Rating> ratings = new HashMap<User, Rating>();
 	
@@ -68,6 +71,14 @@ public class Movie {
 		return imdb;
 	}
 	
+	public double getAverageRating() {
+		return averageRating;
+	}
+	
+	public void setAverageRating(double averageRating) {
+		this.averageRating = averageRating;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -93,7 +104,18 @@ public class Movie {
 			ratings.put(user, rating);
 			return true;
 		}
+		updateAverageRating();
+		
 		return false;
+	}
+	
+	private void updateAverageRating() {
+		Set<User> set = ratings.keySet();
+		double total = 0;
+		for (User u : set) {
+			total +=ratings.get(u).getScore();
+		}
+		averageRating = (total / set.size());
 	}
 	
 	public Map<User, Rating> getRatings() {
