@@ -45,7 +45,7 @@ public class Ratings {
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public ArrayList<Movie> getMovies(@HeaderParam("Token") String token) {
+	public ArrayList<Movie> getMyRatedMovies(@HeaderParam("Token") String token) {
 		Model model = (Model) context.getAttribute("Model");
 		return null;
 		//TODO return model.getMyRatedMovies(token);
