@@ -3,7 +3,11 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlRootElement
 public class User {
@@ -19,12 +23,18 @@ public class User {
 	public User(String firstName, String insert, String lastName,
 			String nickName, String password) {
 		this.firstName = firstName;
-		this.insert = insert;
+		if (insert == null) {
+			insert = "";
+		} else {
+			this.insert = insert;			
+		}
 		this.lastName = lastName;
 		this.nickName = nickName;
 		this.password = password;
 		token = new Token();
 	}
+	@XmlTransient
+	@JsonIgnore
 	public Token getToken() {
 		return token;
 	}
