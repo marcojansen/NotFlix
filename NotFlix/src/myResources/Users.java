@@ -1,8 +1,10 @@
 package myResources;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -27,25 +29,51 @@ public class Users {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Token createUser(@FormParam("firstname")String firstname, @FormParam("insert") String insert
 			, @FormParam("lastname") String lastname, @FormParam("nickname") String nickname
-			,@FormParam("password") String password) {
+			,@FormParam("password") String password, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
 		User user = model.addUser(firstname, insert, lastname, nickname, password);
-		return user.getToken();
+		if(user == null){
+			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+			return null;
+		}else{
+			response.setStatus(HttpServletResponse.SC_CREATED);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+			return user.getToken();
+		}
 	}
 	
 	@POST
 	@Path("/login")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Token Login(@FormParam("nickname") String nickname, @FormParam("password") String password) {
+	public Token Login(@FormParam("nickname") String nickname, @FormParam("password") String password, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		return model.login(nickname, password);
+		Token token = model.login(nickname, password);
+		if(token == null){
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+		}
+		return token;
 	}
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ArrayList<User> getUsers(@HeaderParam("token") String token) {
+	public ArrayList<User> getUsers(@HeaderParam("token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
+		ArrayList<User> users = model.getUsers(token);
+		if(users == null){
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+		}
 		return model.getUsers(token);
 	}
 	

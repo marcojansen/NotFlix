@@ -18,18 +18,9 @@ public class Model {
 		return movies;
 	}
 	
-	public void setMovies(ArrayList<Movie> movies) {
-		this.movies = movies;
-	}
-	
 	public ArrayList<User> getUsers(){
 		return users;
 	}
-	
-	public void setUsers(ArrayList<User> users) {
-		this.users = users;
-	}
-	
 	
 	public boolean addRating(Movie movie, int rating, User user){
 		if(movies.contains(movie) && rating > 0 && rating <= 10){
@@ -69,7 +60,7 @@ public class Model {
 				return users;
 			}
 		}
-		return new ArrayList<User>();
+		return null;
 	}
 	
 	private User getUserByNickname(String nickname) {
