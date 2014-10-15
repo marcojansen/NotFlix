@@ -29,8 +29,7 @@ public class Users {
 			, @FormParam("lastname") String lastname, @FormParam("nickname") String nickname
 			,@FormParam("password") String password) {
 		Model model = (Model) context.getAttribute("Model");
-		User user = model.addUser(firstname, insert, lastname, nickname, password);
-		return user.getToken();
+		return model.addUser(firstname, insert, lastname, nickname, password);
 	}
 	
 	@POST

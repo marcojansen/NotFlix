@@ -42,7 +42,7 @@ public class Model {
 		return movies;
 	}
 	
-	public User addUser(String firstName, String insert, String lastName, String nickName
+	public Token addUser(String firstName, String insert, String lastName, String nickName
 			,String password) {
 		for (User user : users) {
 			if (user.getNickName().equals(nickName)) {
@@ -51,7 +51,7 @@ public class Model {
 		}
 		User user = new User(firstName, insert, lastName, nickName, password);
 		users.add(user);
-		return user;
+		return user.getToken();
 	}
 	
 	public Token login(String nickname, String password) {
