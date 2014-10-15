@@ -100,12 +100,21 @@ public class Movie {
 	}
 	
 	public boolean addRating(Rating rating, User user){
-		if(ratings.get(user) != null){
+		if(ratings.get(user) == null){
 			ratings.put(user, rating);
+			updateAverageRating();
 			return true;
 		}
-		updateAverageRating();
 		
+		return false;
+	}
+	
+	public boolean changeRating(Rating rating, User user) {
+		if (ratings.get(user) != null) {
+			ratings.put(user, rating);
+			updateAverageRating();
+			return true;
+		}
 		return false;
 	}
 	

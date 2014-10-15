@@ -52,9 +52,28 @@ public class Ratings {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void putRating(@FormParam("imdb") String imdb, @FormParam("rating") double rating, @HeaderParam("Token") String token) {
+	public void changeRating(@FormParam("imdb") String imdb, @FormParam("rating") double rating, @HeaderParam("Token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		//TODO model.putRating(token,imdb,rating);
+		if(!model.isUser(token)){
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+				return;
+			} catch (IOException e) {}
+		}
+		boolean added = model.changeRating(token, imdb, rating);
+		if(added){
+			response.setStatus(HttpServletResponse.SC_ACCEPTED);
+			try {
+				response.flushBuffer();
+				return;
+			} catch (IOException e) {}
+		}
+		response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+		try {
+			response.flushBuffer();
+			return;
+		} catch (IOException e) {}
 	}
 	
 	@DELETE
@@ -64,12 +83,24 @@ public class Ratings {
 		//TODO model.deleteRating(token,imdb);
 	}
 	
+	/**
+	 * Not finished YET!
+	 * @param token
+	 * @param response
+	 * @return
+	 */
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public ArrayList<Movie> getMyRatedMovies(@HeaderParam("Token") String token) {
+	public ArrayList<Movie> getMyRatedMovies(@HeaderParam("Token") String token, @Context final HttpServletResponse response) {
+		
 		Model model = (Model) context.getAttribute("Model");
-		return null;
-		//TODO return model.getMyRatedMovies(token);
+		if (!model.isUser(token)) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+		}
+		return model.getMyRatedMovies(token);
 	}
 	
 	

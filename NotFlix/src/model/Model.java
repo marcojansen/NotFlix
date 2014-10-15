@@ -123,4 +123,25 @@ public class Model {
 		return false;
 	}
 
+	public boolean changeRating(String token, String imdb, double rating) {
+		Movie movie = getMovie(imdb);
+		User user = getUserByToken(token);
+		if (movie != null && user != null) {
+			return movie.changeRating(new Rating(rating, movie.getId()), user);
+		}
+		return false;
+		
+	}
+
+	public ArrayList<Movie> getMyRatedMovies(String token) {
+		User user = getUserByToken(token);
+		ArrayList<Movie> myRatedMovies = new ArrayList<Movie>();
+		for (Movie movie: movies) {
+			if (movie.getRatings().containsKey(user)) {
+				myRatedMovies.add(movie);
+			}
+		}
+		return myRatedMovies;
+	}
+
 }
