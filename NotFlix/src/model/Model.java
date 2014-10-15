@@ -18,6 +18,19 @@ public class Model {
 		return movies;
 	}
 	
+	public void setMovies(ArrayList<Movie> movies) {
+		this.movies = movies;
+	}
+	
+	public ArrayList<User> getUsers(){
+		return users;
+	}
+	
+	public void setUsers(ArrayList<User> users) {
+		this.users = users;
+	}
+	
+	
 	public boolean addRating(Movie movie, int rating, User user){
 		if(movies.contains(movie) && rating > 0 && rating <= 10){
 			return movie.addRating(new Rating(rating, movie.getId()), user);
@@ -52,7 +65,7 @@ public class Model {
 	
 	public ArrayList<User> getUsers(String token) {
 		for (User user : users) {
-			if (user.getToken().getToken().equals(token)) {
+			if (token.equals(user.getToken().getToken())) {
 				return users;
 			}
 		}
