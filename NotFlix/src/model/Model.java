@@ -10,8 +10,8 @@ public class Model {
 	public Model() {
 		movies.add(new Movie("1234", "Breaking Bad", "2012", 138, "Steven Seagal", "Deze film is een serie"));
 		movies.add(new Movie("1235","Breaking Good","2013",140,"Steven Seagul","Dit is een test"));
-		users.add(new User("marco", " ", "jansen", "marco", "jansen"));
-		users.add(new User("daan", " ", "veldhof", "daan", "veldhof"));
+		users.add(new User("marco", null, "jansen", "marco", "jansen"));
+		users.add(new User("daan", null, "veldhof", "daan", "veldhof"));
 	}
 	
 	public ArrayList<Movie> getMovies() {
@@ -33,7 +33,7 @@ public class Model {
 		return movies;
 	}
 	
-	public User addUser(String firstName, String insert, String lastName, String nickName
+	public Token addUser(String firstName, String insert, String lastName, String nickName
 			,String password) {
 		for (User user : users) {
 			if (user.getNickName().equals(nickName)) {
@@ -42,7 +42,7 @@ public class Model {
 		}
 		User user = new User(firstName, insert, lastName, nickName, password);
 		users.add(user);
-		return user;
+		return user.getToken();
 	}
 	
 	public Token login(String nickname, String password) {

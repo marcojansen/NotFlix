@@ -31,7 +31,7 @@ public class Users {
 			, @FormParam("lastname") String lastname, @FormParam("nickname") String nickname
 			,@FormParam("password") String password, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		User user = model.addUser(firstname, insert, lastname, nickname, password);
+		return model.addUser(firstname, insert, lastname, nickname, password);
 		if(user == null){
 			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 			try {
@@ -80,7 +80,7 @@ public class Users {
 	@GET
 	@Path("{nickname}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public User getUser(@HeaderParam("token") String token, @PathParam("nickname") String nickname) {
+	public User getUser(@HeaderParam("Token") String token, @PathParam("nickname") String nickname) {
 		Model model = (Model) context.getAttribute("Model");
 		return model.getUser(nickname, token);
 	}
