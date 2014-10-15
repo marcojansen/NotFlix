@@ -40,10 +40,10 @@ public class Model {
 		return user;
 	}
 	
-	public User login(String nickname, String password) {
+	public Token login(String nickname, String password) {
 		for (User user: users) {
 			if (user.getNickName().equals(nickname) && user.getPassword().equals(password)) {
-				return user;
+				return user.getToken();
 			}
 		}
 		return null;

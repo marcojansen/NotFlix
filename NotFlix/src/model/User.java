@@ -8,8 +8,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class User {
 
-	private String firstName, insert, lastName, nickName, password,token;
+	private String firstName, insert, lastName, nickName, password;
 	private ArrayList<Rating> ratings = new ArrayList<Rating>();
+	private Token token;
+	
 
 	public User() {
 	}
@@ -21,23 +23,10 @@ public class User {
 		this.lastName = lastName;
 		this.nickName = nickName;
 		this.password = password;
-
-		token = generateToken();
-
+		token = new Token();
 	}
-
-	public String generateToken() {
-		Random rng = new Random();
-		String characters = "1234567890abcdefhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		int length = 24;
-		char[] text = new char[length];
-		for (int i = 0; i < length; i++) {
-			text[i] = characters.charAt(rng.nextInt(characters.length()));
-		}
-		return new String(text);
-	}
-
-	public String getToken() {
+	
+	public Token getToken() {
 		return token;
 	}
 
@@ -81,9 +70,6 @@ public class User {
 		this.password = password;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
-	}
 
 	public String getNickName() {
 		return nickName;

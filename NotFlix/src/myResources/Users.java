@@ -3,7 +3,6 @@ package myResources;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -15,9 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.sun.research.ws.wadl.Response;
-
 import model.Model;
+import model.Token;
 import model.User;
 
 @Path("/users")
@@ -27,20 +25,19 @@ public class Users {
 	@POST
 	@Produces({ MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public User createUser(@FormParam("firstname")String firstname, @FormParam("insert") String insert
+	public Token createUser(@FormParam("firstname")String firstname, @FormParam("insert") String insert
 			, @FormParam("lastname") String lastname, @FormParam("nickname") String nickname
 			,@FormParam("password") String password) {
 		Model model = (Model) context.getAttribute("Model");
-
 		User user = model.addUser(firstname, insert, lastname, nickname, password);
-		return user;
+		return user.getToken();
 	}
 	
 	@POST
 	@Path("/login")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public User Login(@FormParam("nickname") String nickname, @FormParam("password") String password) {
+	public Token Login(@FormParam("nickname") String nickname, @FormParam("password") String password) {
 		Model model = (Model) context.getAttribute("Model");
 		return model.login(nickname, password);
 	}
