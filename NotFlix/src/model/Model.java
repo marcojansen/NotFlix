@@ -78,7 +78,7 @@ public class Model {
 		return false;
 	}
 	
-	private User getUserByToken(String token){
+	public User getUserByToken(String token){
 		for(User user : users){
 			if(user.getToken().getToken().equals(token)){
 				return user;

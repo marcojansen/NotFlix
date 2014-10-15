@@ -1,8 +1,10 @@
 package myResources;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -24,9 +26,28 @@ public class Ratings {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void addRating(@FormParam("imdb") String imdb, @FormParam("rating") double rating, @HeaderParam("Token") String token) {
+	public void addRating(@FormParam("imdb") String imdb, @FormParam("rating") double rating, @HeaderParam("Token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		//TODO model.addRating(token,imdb,rating);
+		if(!model.isUser(token)){
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+				return;
+			} catch (IOException e) {}
+		}
+		boolean added = model.addRating(imdb, rating, token);
+		if(added){
+			response.setStatus(HttpServletResponse.SC_CREATED);
+			try {
+				response.flushBuffer();
+				return;
+			} catch (IOException e) {}
+		}
+		response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+		try {
+			response.flushBuffer();
+			return;
+		} catch (IOException e) {}
 	}
 	
 	@PUT
