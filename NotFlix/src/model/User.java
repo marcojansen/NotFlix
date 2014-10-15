@@ -17,8 +17,7 @@ public class User {
 	private Token token;
 	
 
-	public User() {
-	}
+	public User() {}
 
 	public User(String firstName, String insert, String lastName,
 			String nickName, String password) {

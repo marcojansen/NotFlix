@@ -63,6 +63,24 @@ public class Model {
 		return null;
 	}
 	
+	public boolean isUser(String token){
+		for(User user : users){
+			if(user.getToken().getToken().equals(token)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private User getUserByToken(String token){
+		for(User user : users){
+			if(user.getToken().getToken().equals(token)){
+				return user;
+			}
+		}
+		return null;
+	}
+	
 	private User getUserByNickname(String nickname) {
 		for (User user: users) {
 			if (user.getNickName().equals(nickname)) {
@@ -79,6 +97,24 @@ public class Model {
 			}
 		}
 		return null;
+	}
+	
+	private Movie getMovie(String imdbId){
+		for(Movie movie : movies){
+			if(movie.getImdb().equals(imdbId)){
+				return movie;			
+			}
+		}
+		return null;
+	}
+	
+	public boolean addRating(String imdbId, double score, String token){
+		Movie movie = getMovie(imdbId);
+		User user = getUserByToken(token);
+		if(movie != null && user != null){
+			return movie.addRating(new Rating(score, movie.getId()), user);
+		}
+		return false;
 	}
 
 }

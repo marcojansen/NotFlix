@@ -76,9 +76,22 @@ public class Users {
 	@GET
 	@Path("{nickname}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public User getUser(@HeaderParam("Token") String token, @PathParam("nickname") String nickname) {
+	public User getUser(@HeaderParam("Token") String token, @PathParam("nickname") String nickname, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		return model.getUser(nickname, token);
+		User user = model.getUser(nickname, token);
+		if(!model.isUser(token)){
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+		}
+		if(user == null){
+			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+		}
+		return user;
 	}
 
 }

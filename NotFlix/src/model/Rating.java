@@ -2,17 +2,17 @@ package model;
 
 public class Rating {
 	
-	private int score;
+	private double score;
 	private int movieID;
 	
 	public Rating() {}
 	
-	public Rating(int score, int movieID) {
+	public Rating(double score, int movieID) {
 		this.score = score;
 		this.movieID = movieID;
 	}
 
-	public int getScore() {
+	public double getScore() {
 		return score;
 	}
 	
