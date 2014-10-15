@@ -1,9 +1,12 @@
 package myResources;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -28,8 +31,15 @@ public class Movies {
 	@GET
 	@Path("/rated")
 	@Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-	public ArrayList<Movie> getRatedMovies() {
+	public ArrayList<Movie> getRatedMovies(@HeaderParam("Token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
+		if(!model.isUser(token)){
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+			return null;
+		}
 		return model.getRatedMovies();
 	}
 

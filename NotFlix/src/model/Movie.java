@@ -100,11 +100,11 @@ public class Movie {
 	}
 	
 	public boolean addRating(Rating rating, User user){
-		if(ratings.get(user) != null){
+		if(ratings.get(user) == null){
 			ratings.put(user, rating);
+			updateAverageRating();
 			return true;
 		}
-		updateAverageRating();
 		
 		return false;
 	}
@@ -120,6 +120,13 @@ public class Movie {
 	
 	public Map<User, Rating> getRatings() {
 		return ratings;
+	}
+
+	public boolean deleteRating(User user) {
+		if(ratings.get(user) != null){
+			ratings.remove(user);
+		}
+		return true;
 	}
 	
 	
