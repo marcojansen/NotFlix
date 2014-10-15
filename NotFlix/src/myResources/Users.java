@@ -31,20 +31,16 @@ public class Users {
 			, @FormParam("lastname") String lastname, @FormParam("nickname") String nickname
 			,@FormParam("password") String password, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		return model.addUser(firstname, insert, lastname, nickname, password);
-		if(user == null){
+		Token token = model.addUser(firstname, insert, lastname, nickname, password);
+		if(token == null){
 			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-			try {
-				response.flushBuffer();
-			} catch (IOException e) {}
-			return null;
 		}else{
 			response.setStatus(HttpServletResponse.SC_CREATED);
-			try {
-				response.flushBuffer();
-			} catch (IOException e) {}
-			return user.getToken();
 		}
+		try {
+			response.flushBuffer();
+		} catch (IOException e) {}
+		return token;
 	}
 	
 	@POST
@@ -74,7 +70,7 @@ public class Users {
 				response.flushBuffer();
 			} catch (IOException e) {}
 		}
-		return model.getUsers(token);
+		return users;
 	}
 	
 	@GET
