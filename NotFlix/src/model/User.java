@@ -25,9 +25,12 @@ public class User {
 		this.password = password;
 		token = new Token();
 	}
-	
 	public Token getToken() {
 		return token;
+	}
+	
+	public void setToken(Token token) {
+		this.token = token;
 	}
 
 	public String getFirstName() {

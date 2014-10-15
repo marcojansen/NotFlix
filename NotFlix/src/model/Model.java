@@ -10,8 +10,8 @@ public class Model {
 	public Model() {
 		movies.add(new Movie("1234", "Breaking Bad", "2012", 138, "Steven Seagal", "Deze film is een serie"));
 		movies.add(new Movie("1235","Breaking Good","2013",140,"Steven Seagul","Dit is een test"));
-		users.add(new User("marco", "", "jansen", "marco", "jansen"));
-		users.add(new User("daan", "", "veldhof", "daan", "veldhof"));
+		users.add(new User("marco", " ", "jansen", "marco", "jansen"));
+		users.add(new User("daan", " ", "veldhof", "daan", "veldhof"));
 	}
 	
 	public ArrayList<Movie> getMovies() {
@@ -26,7 +26,6 @@ public class Model {
 	}
 
 	public ArrayList<Movie> getRatedMovies() {
-		//TODO
 		return movies;
 	}
 	
@@ -53,7 +52,7 @@ public class Model {
 	
 	public ArrayList<User> getUsers(String token) {
 		for (User user : users) {
-			if (token.equals(user.getToken())) {
+			if (user.getToken().getToken().equals(token)) {
 				return users;
 			}
 		}
@@ -71,7 +70,7 @@ public class Model {
 	
 	public User getUser(String nickname, String token) {
 		for (User user: users) {
-			if (token.equals(user.getToken())) {
+			if (user.getToken().getToken().equals(token)) {
 				return getUserByNickname(nickname);
 			}
 		}
