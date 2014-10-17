@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +29,17 @@ public class Movie {
 		this.length = length;
 		this.director = director;
 		this.shortDesc = shortDesc;
+	}
+	
+	public Movie(Movie movie) {
+		this.id = movie.getId();
+		this.imdb = movie.getImdb();
+		this.title = movie.getTitle();
+		this.date = movie.getDate();
+		this.length = movie.getLength();
+		this.director = movie.getDirector();
+		this.shortDesc = movie.getShortDesc();
+		this.averageRating = movie.getAverageRating();
 	}
 	
 	@XmlTransient
@@ -127,6 +137,8 @@ public class Movie {
 		averageRating = (total / set.size());
 	}
 	
+	@XmlTransient
+	@JsonIgnore
 	public Map<User, Rating> getRatings() {
 		return ratings;
 	}

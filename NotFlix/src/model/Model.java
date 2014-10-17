@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class Model {
 	
 	ArrayList<Movie> movies = new ArrayList<Movie>();
@@ -141,12 +143,13 @@ public class Model {
 		
 	}
 
-	public ArrayList<Movie> getMyRatedMovies(String token) {
+	public ArrayList<RatedMovie> getMyRatedMovies(String token) {
 		User user = getUserByToken(token);
-		ArrayList<Movie> myRatedMovies = new ArrayList<Movie>();
+		ArrayList<RatedMovie> myRatedMovies = new ArrayList<RatedMovie>();
 		for (Movie movie: movies) {
 			if (movie.getRatings().containsKey(user)) {
-				myRatedMovies.add(movie);
+				Rating rating = movie.getRatings().get(user);
+				myRatedMovies.add(new RatedMovie(movie, rating.getScore()));
 			}
 		}
 		return myRatedMovies;

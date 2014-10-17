@@ -18,7 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import model.Model;
-import model.Movie;
+import model.RatedMovie;
 
 @Path("/ratings")
 public class Ratings {
@@ -28,7 +28,7 @@ public class Ratings {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void addRating(@FormParam("imdb") String imdb, @FormParam("rating") double rating, @HeaderParam("Token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		if(!model.isUser(token)){
+		if(!model.isUser(token) && rating >= 1 && rating <= 10){
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			try {
 				response.flushBuffer();
@@ -55,7 +55,7 @@ public class Ratings {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void changeRating(@FormParam("imdb") String imdb, @FormParam("rating") double rating, @HeaderParam("Token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		if(!model.isUser(token)){
+		if(!model.isUser(token) && rating >= 1 && rating <= 10){
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			try {
 				response.flushBuffer();
@@ -104,15 +104,9 @@ public class Ratings {
 		}
 	}
 	
-	/**
-	 * Not finished YET!
-	 * @param token
-	 * @param response
-	 * @return
-	 */
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public ArrayList<Movie> getMyRatedMovies(@HeaderParam("Token") String token, @Context final HttpServletResponse response) {
+	public ArrayList<RatedMovie> getMyRatedMovies(@HeaderParam("Token") String token, @Context final HttpServletResponse response) {
 		
 		Model model = (Model) context.getAttribute("Model");
 		if (!model.isUser(token)) {
