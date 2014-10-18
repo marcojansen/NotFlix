@@ -63,8 +63,8 @@ public class Ratings {
 				return;
 			} catch (IOException e) {}
 		}
-		boolean added = model.changeRating(token, imdb, rating);
-		if(added){
+		boolean changed = model.changeRating(token, imdb, rating);
+		if(changed){
 			response.setStatus(HttpServletResponse.SC_ACCEPTED);
 			try {
 				response.flushBuffer();
