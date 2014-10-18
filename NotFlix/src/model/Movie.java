@@ -146,8 +146,10 @@ public class Movie {
 	public boolean deleteRating(User user) {
 		if(ratings.get(user) != null){
 			ratings.remove(user);
+			updateAverageRating();
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	

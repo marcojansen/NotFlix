@@ -13,6 +13,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.catalina.connector.Response;
+
 import model.Model;
 import model.Movie;
 
@@ -41,6 +43,22 @@ public class Movies {
 			return null;
 		}
 		return model.getRatedMovies();
+	}
+	
+	@GET
+	@Path("/unrated")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public ArrayList<Movie> getUnratedMovies(@HeaderParam("Token")String token, @Context final HttpServletResponse response) {
+		Model model = (Model) context.getAttribute("Model");
+		if (!model.isUser(token)) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+			return null;
+		}
+		
+		return model.getUnratedMovies();
 	}
 
 }

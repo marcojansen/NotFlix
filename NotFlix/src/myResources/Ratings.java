@@ -18,6 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import model.Model;
+import model.Movie;
 import model.RatedMovie;
 
 @Path("/ratings")
@@ -118,6 +119,20 @@ public class Ratings {
 		return model.getMyRatedMovies(token);
 	}
 	
+	@GET
+	@Path("/unrated")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public ArrayList<Movie> getMyUnratedMovies(@HeaderParam("Token") String token, @Context final HttpServletResponse response) {
+		Model model = (Model) context.getAttribute("Model");
+		if (!model.isUser(token)) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.flushBuffer();
+			} catch (IOException e) {}
+			return null;
+		}
+		return model.getMyUnratedMovies(token);
+	}
 	
 	
 	

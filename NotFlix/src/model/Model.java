@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -153,6 +154,27 @@ public class Model {
 			}
 		}
 		return myRatedMovies;
+	}
+	
+	public ArrayList<Movie> getUnratedMovies() {
+		ArrayList<Movie> unratedMovies = new ArrayList<Movie>();
+		for (Movie movie: movies) {
+			if (movie.getAverageRating() == 0.0) {
+				unratedMovies.add(movie);
+			}
+		}
+		return unratedMovies;
+	}
+
+	public ArrayList<Movie> getMyUnratedMovies(String token) {
+		User user = getUserByToken(token);
+		ArrayList<Movie> myUnratedMovies = new ArrayList<Movie>();
+		for (Movie movie: movies) {
+			if (!movie.getRatings().containsKey(user)) {
+				myUnratedMovies.add(movie);
+			}
+		}
+		return myUnratedMovies;
 	}
 
 }
