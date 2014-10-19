@@ -42,15 +42,51 @@ public class Movie {
 		this.averageRating = movie.getAverageRating();
 	}
 	
+	@XmlAttribute
+	public String getImdb() {
+		return imdb;
+	}
+	
 	@XmlTransient
 	@JsonIgnore
 	public int getId() {
 		return id;
 	}
+	
+	@XmlTransient
+	@JsonIgnore
+	public Map<User, Rating> getRatings() {
+		return ratings;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+	
+	public int getLength() {
+		return length;
+	}
+	
+	public String getDirector() {
+		return director;
+	}
+	
+	public String getShortDesc() {
+		return shortDesc;
+	}
+	
+	public double getAverageRating() {
+		return averageRating;
+	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 
 	public void setLength(int length) {
 		this.length = length;
@@ -76,37 +112,9 @@ public class Movie {
 		this.shortDesc = shortDesc;
 	}
 	
-	@XmlAttribute
-	public String getImdb() {
-		return imdb;
-	}
-	
-	public double getAverageRating() {
-		return averageRating;
-	}
 	
 	public void setAverageRating(double averageRating) {
 		this.averageRating = averageRating;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-	
-	public String getDate() {
-		return date;
-	}
-
-	public int getLength() {
-		return length;
-	}
-	
-	public String getDirector() {
-		return director;
-	}
-	
-	public String getShortDesc() {
-		return shortDesc;
 	}
 	
 	public boolean addRating(Rating rating, User user){
@@ -127,21 +135,6 @@ public class Movie {
 		}
 		return false;
 	}
-	
-	private void updateAverageRating() {
-		Set<User> set = ratings.keySet();
-		double total = 0;
-		for (User u : set) {
-			total +=ratings.get(u).getScore();
-		}
-		averageRating = (total / set.size());
-	}
-	
-	@XmlTransient
-	@JsonIgnore
-	public Map<User, Rating> getRatings() {
-		return ratings;
-	}
 
 	public boolean deleteRating(User user) {
 		if(ratings.get(user) != null){
@@ -152,5 +145,17 @@ public class Movie {
 		return false;
 	}
 	
+	private void updateAverageRating() {
+		Set<User> set = ratings.keySet();
+		double total = 0;
+		for (User u : set) {
+			total +=ratings.get(u).getScore();
+		}
+		if (set.size() == 0) {
+			averageRating = 0;
+		} else {
+			averageRating = (total / set.size());
+		}
+	}
 	
 }
