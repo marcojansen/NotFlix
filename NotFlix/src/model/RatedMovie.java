@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Rated movie. Used for the method getMyRatedMovies in model.
- * This contains an movie + an rating.
+ * This contains an movie and a rating.
  *
  */
 @XmlRootElement
