@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Class for an user.
+ */
 @XmlRootElement
 public class User {
 
@@ -16,8 +19,19 @@ public class User {
 	private Token token;
 	
 
+	/**
+	 * Empty constructor for Jaxb
+	 */
 	public User() {}
 
+	/**
+	 * Constructor to create an user.
+	 * @param firstName		Firstname of the user
+	 * @param insert		Insert of the user ( can be null if not present )
+	 * @param lastName		Lastname of the user
+	 * @param nickName		Nickname for the user	( used to login )
+	 * @param password		Password for the user	( used to login )
+	 */
 	public User(String firstName, String insert, String lastName,
 			String nickName, String password) {
 		this.firstName = firstName;
