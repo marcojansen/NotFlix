@@ -63,14 +63,13 @@ public class Users {
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public ArrayList<User> getUsers(@HeaderParam("token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		ArrayList<User> users = model.getUsers(token);
-		if(users == null){
+		if(!model.isUser(token)){
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			try {
 				response.flushBuffer();
 			} catch (IOException e) {}
 		}
-		return users;
+		return model.getUsers();
 	}
 	
 	@GET
@@ -78,12 +77,13 @@ public class Users {
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public User getUser(@HeaderParam("Token") String token, @PathParam("nickname") String nickname, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		User user = model.getUser(nickname, token);
+		User user = model.getUserByNickname(nickname);
 		if(!model.isUser(token)){
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			try {
 				response.flushBuffer();
 			} catch (IOException e) {}
+			return null;
 		}
 		if(user == null){
 			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
