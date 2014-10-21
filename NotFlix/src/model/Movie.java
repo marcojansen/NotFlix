@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Movie.
+ * Class for a Movie.
  * Contains movie information.
  */
 @XmlRootElement

@@ -5,7 +5,8 @@ import java.util.Random;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Class that generates a token, An user has a token.
+ * Class that generates a token
+ * An user has a token.
  */
 @XmlRootElement
 public class Token {

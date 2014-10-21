@@ -3,9 +3,9 @@ package model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Rated movie. Used for the method getMyRatedMovies in model.
+ * Class for a Rated movie. 
+ * Used for the method getMyRatedMovies in Model.
  * This contains an movie and a rating.
- *
  */
 @XmlRootElement
 public class RatedMovie extends Movie {

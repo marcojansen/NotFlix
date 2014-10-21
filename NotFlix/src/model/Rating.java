@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Rating.
+ * Class for a Rating.
  * Rating can be added to an movie. 
  * Contains a movieId and a score.
  *
