@@ -4,14 +4,25 @@ import java.util.Random;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Class that generates a token
+ * An user has a token.
+ */
 @XmlRootElement
 public class Token {
 	String token;
 	
+	/**
+	 * Constructor, creates a token.
+	 */
 	public Token() {
 		token = generateToken();
 	}
 	
+	/**
+	 * Method to generate a token.
+	 * @return	Random string of 24 characters with Capitals,letters and numbers.
+	 */
 	public String generateToken() {
 		Random rng = new Random();
 		String characters = "1234567890abcdefhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

@@ -21,6 +21,9 @@ import model.Model;
 import model.Movie;
 import model.RatedMovie;
 
+/**
+ * Path /ratings, Documented in Documentatie.pdf
+ */
 @Path("/ratings")
 public class Ratings {
 	@Context ServletContext context;
