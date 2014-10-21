@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User {
 
 	private String firstName, insert, lastName, nickName, password;
-	private ArrayList<Rating> ratings = new ArrayList<Rating>();
 	private Token token;
 	
 
@@ -54,14 +53,6 @@ public class User {
 		return lastName;
 	}
 
-	public ArrayList<Rating> getRatings() {
-		return ratings;
-	}
-
-	public void setRatings(ArrayList<Rating> ratings) {
-		this.ratings = ratings;
-	}
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -92,14 +83,4 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-
-	public double getRating(int movieId) {
-		for (Rating rating : ratings) {
-			if (rating.getMovieID() == movieId) {
-				return rating.getScore();
-			}
-		}
-		return 0;
-	}
-
 }
