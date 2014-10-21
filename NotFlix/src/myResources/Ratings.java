@@ -32,7 +32,7 @@ public class Ratings {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void addRating(@FormParam("imdb") String imdb, @FormParam("rating") double rating, @HeaderParam("Token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		if(!model.isUser(token) && rating >= 1 && rating <= 10){
+		if(!model.isUser(token) || rating >= 1 || rating <= 10){
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			try {
 				response.flushBuffer();
@@ -59,7 +59,7 @@ public class Ratings {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void changeRating(@FormParam("imdb") String imdb, @FormParam("rating") double rating, @HeaderParam("Token") String token, @Context final HttpServletResponse response) {
 		Model model = (Model) context.getAttribute("Model");
-		if(!model.isUser(token) && rating >= 1 && rating <= 10){
+		if(!model.isUser(token) || rating >= 1 || rating <= 10){
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			try {
 				response.flushBuffer();
@@ -117,6 +117,7 @@ public class Ratings {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			try {
 				response.flushBuffer();
+				return null;
 			} catch (IOException e) {}
 		}
 		return model.getMyRatedMovies(token);

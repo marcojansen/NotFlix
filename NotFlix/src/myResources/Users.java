@@ -71,6 +71,7 @@ public class Users {
 			try {
 				response.flushBuffer();
 			} catch (IOException e) {}
+			return null;
 		}
 		return model.getUsers();
 	}
