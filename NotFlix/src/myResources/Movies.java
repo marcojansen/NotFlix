@@ -18,6 +18,9 @@ import org.apache.catalina.connector.Response;
 import model.Model;
 import model.Movie;
 
+/**
+ * Path /movies, Documented in Documentatie.pdf
+ */
 @Path("/movies")
 public class Movies {
 	

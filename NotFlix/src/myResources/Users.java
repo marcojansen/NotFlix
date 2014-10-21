@@ -20,6 +20,9 @@ import model.Model;
 import model.Token;
 import model.User;
 
+/**
+ * Path /users, Documented in Documentatie.pdf
+ */
 @Path("/users")
 public class Users {
 	@Context ServletContext context;
