@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Movies</title>
+    <title>Films</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
     <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
@@ -11,8 +11,34 @@
 </head>
 
 <body>
+    <div id="loginpage" data-role="page">
 
-    <div data-role="page">
+        <div data-role="header">
+            <h1>Login</h1>
+        </div>
+        <!-- /header -->
+
+        <div id="content" data-role="content">
+            <form id="loginform" method="post" action="#">
+                <label for="nickname" class="ui-hidden-accessible">Nickname:</label>
+                <input type="text" name="nickname" id="nickname" value="" placeholder="Nickname" />
+
+                <label for="password" class="ui-hidden-accessible">Password:</label>
+                <input type="password" name="password" id="password" value="" placeholder="Password">
+
+                <input type="submit" id="login" value="Login">
+            </form>
+
+        </div>
+        <!-- /content -->
+        <div data-role="footer">
+            <h4>Copyright NotFlix 2014</h4>
+        </div>
+
+    </div>
+    <!-- /page -->
+
+    <div id="moviespage" data-role="page">
 
         <div data-role="header">
             <h1>Movies</h1>
@@ -20,14 +46,15 @@
         <!-- /header -->
 
         <div id="content" data-role="content">
-            <ul id="movies" data-role="listview" data-inset="true" data-filter="true">
+            <ul id="movielist" data-role="listview" data-inset="true" data-filter="true">
             </ul>
-            <a href="#" data-role="button" data-icon="add">Add movie</a>
         </div>
         <!-- /content -->
+        <div data-role="footer">
+            <h4>Copyright NotFlix 2014</h4>
+        </div>
 
     </div>
-    <!-- /page -->
 
 
 
