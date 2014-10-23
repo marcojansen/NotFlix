@@ -20,7 +20,13 @@ public class Model {
 	 */
 	public Model() {
 		movies.add(new Movie("1234", "Breaking Bad", "2012", 138, "Steven Seagal", "Deze film is een serie"));
-		movies.add(new Movie("1235","Breaking Good","2013",140,"Steven Seagul","Dit is een test"));
+		movies.add(new Movie("1235","Breaking Good","2013",140,"Steven Seagul","Een serie over het goede pad bewandelen"));
+		movies.add(new Movie("1236","Prison Break","2008",80,"Spielberg","Een serie over een gevangenis"));
+		movies.add(new Movie("1250","The November Man","2014",90,"Roger Donaldson","An ex-CIA operative is brought back in on a very personal mission."));
+		movies.add(new Movie("1280","Equalizer","2014",101,"Antoine Fuqua","Een film die over actie gaat"));
+		movies.add(new Movie("1281","Step up: all in","2014",98,"Trish Shie","Een dans film"));
+		
+		users.add(new User("paul", null, "goolkate","paul","goolkate"));
 		users.add(new User("marco", null, "jansen", "marco", "jansen"));
 		users.add(new User("daan", null, "veldhof", "daan", "veldhof"));
 	}
