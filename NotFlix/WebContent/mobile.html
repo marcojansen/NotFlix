@@ -14,19 +14,24 @@
     <div id="loginpage" data-role="page">
 
         <div data-role="header">
-            <h1>Login</h1>
+            <h1>NotFlix</h1>
         </div>
         <!-- /header -->
 
         <div id="content" data-role="content">
-            <form id="loginform" method="post" action="#">
-                <label for="nickname" class="ui-hidden-accessible">Nickname:</label>
-                <input type="text" name="nickname" id="nickname" value="" placeholder="Nickname" />
+            <form id="loginform" class="ui-body ui-body-a ui-corner-all" data-ajax="false">
+                <fieldset>
+                    <div data-role="fieldcontain">
+                        <label for="nickname">Nickname:</label>
+                        <input type="text" value="" name="nickname" id="nickname" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="password">Password:</label>
+                        <input type="password" value="" name="password" id="password" />
+                    </div>
+                    <input type="button" data-theme="b" name="login" id="login" value="Log in">
+                </fieldset>
 
-                <label for="password" class="ui-hidden-accessible">Password:</label>
-                <input type="password" name="password" id="password" value="" placeholder="Password">
-
-                <input type="submit" id="login" value="Login">
             </form>
 
         </div>
