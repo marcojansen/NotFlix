@@ -37,16 +37,16 @@ $(document).on('pageinit', '#loginpage', function(){
                     success: function (data) {
                     	$.each(data, function(index,value) {
                     		token=value;
-                    		$.mobile.changePage("#moviespage");
+                    		$.mobile.changePage("#moviespage",{ transition:"flow"});
                     	})
                     },
                     error: function (request,error) {
                         // This callback function will trigger on unsuccessful action               
-                        alert('Invalid username or password.');
+                        alert("Wrong username or password!");
                     }
                 });                  
         } else {
-            alert('Please fill all necessary fields');
+            alert('Please fill all necessary fields'); 
         }          
         return false; // cancel original event to prevent form submitting
     });   
