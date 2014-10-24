@@ -15,6 +15,7 @@ $(document).ready(function() {
 
 $(function() {
     $("#login").click(function() {
+        alert($("#loginform").serialize());
         $.ajax({
             type: "POST",
             url: 'http://localhost:8080/NotFlix/resources/users/login',

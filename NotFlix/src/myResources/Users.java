@@ -51,6 +51,7 @@ public class Users {
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Token Login(@FormParam("nickname") String nickname, @FormParam("password") String password, @Context final HttpServletResponse response) {
+		System.out.println(nickname + " " + password);
 		Model model = (Model) context.getAttribute("Model");
 		Token token = model.login(nickname, password);
 		if(token == null){
