@@ -3,14 +3,13 @@ var token;
 $(document).on('pageinit','#moviespage',function(){
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/NotFlix/resources/users',
-        headers:{"Token":token},
+        url: 'http://localhost:8080/NotFlix/resources/movies',
         dataType: "json"
     }).fail(function(jqXHR, textStatus) {
         alert("Get movies Request failed: " + textStatus);
     }).done(function(data) {
         $.each(data, function(index, value) {
-            $("#movielist").append("<li>" + value.nickName + "</li>");
+            $("#movielist").append("<li> <a href=#>" + value.title + "</a></li>");
         });
         $("#movielist").listview("refresh");
     });
@@ -51,3 +50,7 @@ $(document).on('pageinit', '#loginpage', function(){
         return false; // cancel original event to prevent form submitting
     });   
 });
+
+$(document).on("click", "#movielist li" ,function (event) {
+    alert("Clicked: " + $(this).text());
+}); 
