@@ -53,6 +53,7 @@
         <div id="content" data-role="content">
             <ul id="movielist" data-role="listview" data-inset="true" data-filter="true">
             </ul>
+            <a id='lnkDialog' href='#dialog' data-rel='dialog' data-transition='pop' style='display:none;'> </a>
         </div>
         <!-- /content -->
         <div data-role="footer">
@@ -60,7 +61,19 @@
         </div>
 
     </div>
-
+    
+    <div data-role="page" id='dialog'>
+    <div data-role='header'>
+    <h1>Rating</h1>
+    </div>
+    <div data-role='content' id='dialogcontent'>
+    <label id='movietitle'>Movie title</label>
+    <input type='number' value='' name='rating' id='rating'>
+    <a href='#' data-role='button' id='submitrating' data-icon='check' data-rel='back'>Submit</a>
+    <a href='#' data-role='button' id='delete' data-icon='delete'>Delete</a>
+    </div>
+    </div>
+    
 
 
 </body>
