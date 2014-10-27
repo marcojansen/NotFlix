@@ -4,22 +4,17 @@ var movie;
 
 $(document).on('pageinit','#moviespage',function(){
     $(document).on('click','#submitrating', function() {
-    	console.log(movie.title + " " + movie.imdb + " " + $('#rating').val());
+    	if (movie.averageRating == 0 ) {
+    		postRating(movie.imdb, $('#rating').val());
+    	} else {
+    		putRating(movie.imdb, $('#rating').val());
+    	}
     });
-    
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/NotFlix/resources/movies',
-        dataType: "json"
-    }).fail(function(jqXHR, textStatus) {
-        alert("Get movies Request failed: " + textStatus);
-    }).done(function(data) {
-    	movies = data;
-        $.each(data, function(index, value) {
-            $("#movielist").append("<li> <a href=\"#\">" + value.title + "</a></li>");
-        });
-        $("#movielist").listview("refresh");
+    $(document).on('click','#delete', function() {
+    	deleteRating(movie.imdb);
     });
+    getMovies();
+   
 });
 
 $(document).on('pageinit', '#loginpage', function(){ 
@@ -60,10 +55,10 @@ $(document).on('pageinit', '#loginpage', function(){
 });
 
 $(document).on("click", "#movielist li" ,function (event) {
+	$('#delete').closest('.ui-btn').show();
 	var title = jQuery.trim($(this).text());
     $.each(movies, function(index,value) {
     	if (title === value.title) {
-    		console.log(value);
     		movie = value;
     	}
     });
@@ -74,4 +69,99 @@ $(document).on("click", "#movielist li" ,function (event) {
     	$('#delete').closest('.ui-btn').hide();
     }
 }); 
+
+function postRating(imdb,rating) {
+	console.log(imdb+' ' + rating + ' ' + token);
+	if (rating >= 1  && rating <= 10) {
+		$.ajax({
+			url: 'http://localhost:8080/NotFlix/resources/ratings',
+			data: 'imdb=' + imdb + '&rating=' + rating,
+			headers: {'Token':token},
+			type: 'post',
+			dataType: 'json',
+			beforeSend : function() {
+				$.mobile.showPageLoadingMsg(true);
+			},
+			complete: function() {
+				$.mobile.hidePageLoadingMsg();
+			},
+			success: function (data) {
+				getMovies();
+			},
+			error: function (request,error) {
+				alert('fail: ' + error);
+			}
+			
+		});
+	}
+}
+
+function putRating(imdb,rating) {
+	if (rating >= 1  && rating <= 10) {
+		$.ajax({
+			url: 'http://localhost:8080/NotFlix/resources/ratings',
+			data: 'imdb=' + imdb + '&rating=' + rating,
+			headers: {'Token':token},
+			type: 'put',
+			dataType: 'json',
+			beforeSend : function() {
+				$.mobile.showPageLoadingMsg(true);
+			},
+			complete: function() {
+				$.mobile.hidePageLoadingMsg();
+			},
+			success: function (data) {
+				getMovies();
+			},
+			error: function (request,error) {
+				alert('fail: ' + error);
+			}
+			
+		});
+	}
+}
+
+function deleteRating(imdb) {
+	$.ajax({
+		url: 'http://localhost:8080/NotFlix/resources/ratings',
+		data: 'imdb=' + imdb,
+		headers: {'Token':token},
+		type: 'delete',
+		dataType:'json',
+		beforeSend : function() {
+			$.mobile.showPageLoadingMsg(true);
+		},
+		complete: function() {
+			$.mobile.hidePageLoadingMsg();
+		},
+		success: function (data) {
+			getMovies();
+			$.mobile.back();
+		},
+		error: function (request,error) {
+			alert('fail: ' + error);
+		}
+	});
+}
+
+function getMovies() {
+	$('#movielist').empty();
+	 $.ajax({
+	        type: 'GET',
+	        url: 'http://localhost:8080/NotFlix/resources/movies',
+	        dataType: "json"
+	    }).fail(function(jqXHR, textStatus) {
+	        alert("Get movies Request failed: " + textStatus);
+	    }).done(function(data) {
+	    	movies = data;
+	        $.each(data, function(index, value) {
+	        	if (value.averageRating == 0) {
+	        		$("#movielist").append("<li data-icon='star'> <a href=\"#\">" + value.title + "</a></li>");	        		
+	        	} else {
+	        		$("#movielist").append("<li data-icon='check'> <a href=\"#\">" + value.title + "</a></li>");
+	        	}
+	        });
+	        $("#movielist").listview("refresh");
+	    });
+}
 
