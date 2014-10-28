@@ -1,5 +1,17 @@
 $(document).ready(function() {
-	
+
+    getMovies();
+
+    $("#loginbutton").click(function() {
+        logIn();
+    });
+
+    $(document).on("click", "#movielistitem", function(e) {
+        alert("row " + $(this).index());
+    });
+});
+
+function getMovies() {
     $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/NotFlix/resources/movies',
@@ -9,11 +21,7 @@ $(document).ready(function() {
     }).done(function(data) {
 
     });
-    $("#loginbutton").click(function() {
-        logIn();
-    });
-});
-
+}
 
 function logIn() {
     var nickname = $("#nickname").val();
