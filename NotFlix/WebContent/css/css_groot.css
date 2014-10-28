@@ -3,3 +3,35 @@
     display: none;
     color: white;
 }
+#movieimage {
+    border: solid 1px black;
+    margin: 20px;
+    max-height: 1%;
+    float: right;
+}
+#moviesummary {
+    border: solid 1px red;
+    max-width: 60%;
+}
+#movielistitem {
+    overflow: hidden;
+    clear: both;
+    border: solid 1px green;
+}
+#listitemimage {
+    margin: 5px;
+    max-width: 10%;
+    float: left;
+}
+#movielistcontainer {
+    max-width: 60%;
+}
+#movielist {
+    border: solid 1px red;
+    max-width: 60%;
+}
+#listitemtitle {
+}
+p {
+    max-width: 50%;
+}

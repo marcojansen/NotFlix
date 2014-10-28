@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
     $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/NotFlix/resources/movies',
@@ -11,7 +12,6 @@ $(document).ready(function() {
     $("#loginbutton").click(function() {
         logIn();
     });
-
 });
 
 
