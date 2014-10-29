@@ -7,6 +7,7 @@ $(document).ready(function() {
         $("#loginform").hide().css("visibility", "hidden");
         $("#shownickname").empty().append("<p>Welkom " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
+        $("#registercontainer").show().css('visibility','hidden');
         loggedIn = true;
     }
     getMovies();
@@ -17,6 +18,9 @@ $(document).ready(function() {
 
     $("#logoutbutton").click(function() {
         logOut();
+    });
+    $("#registerbutton").click(function() {
+    	window.location = "register.html";
     });
 
     $(document).on("click", "#movielistitem", function(e) {
@@ -34,6 +38,7 @@ function logOut() {
     $("#loginform").show().css("visibility", "visible");
     $("#shownickname").hide().css("visibility", "hidden");
     $("#logout").hide().css("visibility", "hidden");
+    $("#registercontainer").show().css('visibility','visiable');
     window.location = "computer.html";
     loggedIn = false;
 }
@@ -97,6 +102,7 @@ function logIn() {
         $("#loginform").hide().css("visibility", "hidden");
         $("#shownickname").empty().append("<p>Welkom " + nickname + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
+        $("#registercontainer").hide().css('visibility','hidden');
         loggedIn = true;
         $.each(data, function(index, value) {
             localStorage.setItem("Token", value);
@@ -204,22 +210,26 @@ function getImageByMovieList(movie) {
     });
 }
 
+
 function register() {
-    $.ajax({
-        type: 'post',
-        url: 'http://localhost:8080/NotFlix/resources/users',
-        dataType: 'json',
-        //data: ,Register form .serialize(); Firstname, Lastname, Nickname, Password, (insert)
-        success: function(data) {
-            //data contains token for registered account.
-        },
-        error: function(request, error) {
-            alert("Register gone wrong!");
-        }
-
-    });
+	$.ajax({
+		type:'post',
+		url:'http://localhost:8080/NotFlix/resources/users',
+		dataType: 'json',
+		data: $("#registerform").serialize(),
+		success: function(data) {
+			$.each(data, function(index,value) {
+				console.log(value);
+				window.location = 'computer.html';
+				alert("Geregistreerd");
+			});
+		},
+		error: function(request,error) {
+			console.log($('#registerform').serialize());
+			alert("Nickname already exists!");
+		}
+	});
 }
-
 function getUsers() {
     $.ajax({
         type: 'get',
