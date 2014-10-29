@@ -4,6 +4,21 @@ var loggedIn = false;
 var movieontop;
 
 $(document).ready(function() {
+    $( "#dialog" ).dialog({
+        autoOpen: false,
+        width: 300,
+        show: {
+            effect: "explode",
+            duration: 1000
+          },
+          hide: {
+            effect: "explode",
+            duration: 1000
+          }
+      });
+      $( "#registerbutton" ).click(function() {
+        $( "#dialog" ).dialog( "open" );
+      });
     if (localStorage.getItem('nickname') !== null) {
         $("#loginform").hide().css("visibility", "hidden");
         $("#shownickname").empty().append("<p>Welkom " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
@@ -22,9 +37,6 @@ $(document).ready(function() {
 
     $("#logoutbutton").click(function() {
         logOut();
-    });
-    $("#registerbutton").click(function() {
-        window.location = "register.html";
     });
     $("#ratingbutton").click(function() {
         console.log("rating button clicked");
@@ -317,8 +329,9 @@ function register() {
         data: $("#registerform").serialize(),
         success: function(data) {
             $.each(data, function(index, value) {
-                window.location = 'computer.html';
+            	
                 alert("Geregistreerd");
+                $( "#dialog" ).dialog( "close" );
             });
         },
         error: function(request, error) {
