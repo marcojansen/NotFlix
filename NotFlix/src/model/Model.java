@@ -26,7 +26,6 @@ public class Model {
 		movies.add(new Movie("tt0455944","Equalizer","2014",132,"Antoine Fuqua","A man believes he has put his mysterious past behind him and has dedicated himself to beginning a new, quiet life. But when he meets a young girl under the control of ultra-violent Russian gangsters, he can't stand idly by - he has to help her."));
 		movies.add(new Movie("tt2713180","Fury","2014",134,"David Ayer","April, 1945. As the Allies make their final push in the European Theatre, a battle-hardened army sergeant named Wardaddy commands a Sherman tank and his five-man crew on a deadly mission behind enemy lines. Out-numbered, out-gunned, and with a rookie soldier thrust into their platoon, Wardaddy and his men face overwhelming odds in their heroic attempts to strike at the heart of Nazi Germany."));
 		
-		users.add(new User("paul", null, "goolkate","paul","goolkate"));
 		users.add(new User("marco", null, "jansen", "marco", "jansen"));
 		users.add(new User("daan", null, "veldhof", "daan", "veldhof"));
 	}

@@ -369,7 +369,8 @@ function getUsers() {
             prepareList();
         },
         error: function(request, error) {
-            alert("Get users gone wrong ");
+            alert("Not logged in or invalid token.");
+            window.location= "computer.html";
         }
 
     });
