@@ -179,6 +179,10 @@ public class Model {
 	 * @return Token if user is created successfuly, else null
 	 */
 	public Token addUser(String firstName, String insert, String lastName, String nickName ,String password) {
+		firstName = firstName.replaceAll("\\s+","");lastName = lastName.replaceAll("\\s+","");nickName=nickName.replaceAll("\\s+","");password=password.replaceAll("\\s+","");
+		if (firstName.isEmpty() || lastName.isEmpty() || nickName.isEmpty() || password.isEmpty()) {
+			return null;
+		}
 		for (User user : users) {
 			if (user.getNickName().equals(nickName)) {
 				return null;

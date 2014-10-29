@@ -21,7 +21,7 @@ $(document).ready(function() {
     });
     if (localStorage.getItem('nickname') !== null) {
         $("#loginform").hide().css("visibility", "hidden");
-        $("#shownickname").empty().append("<p>Welkom " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
+        $("#shownickname").empty().append("<p>Welkom, " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
         $("#registercontainer").show().css('visibility', 'hidden');
         $(".disabled").disabled = false;
@@ -134,7 +134,7 @@ function logIn() {
 
     }).done(function(data) {
         $("#loginform").hide().css("visibility", "hidden");
-        $("#shownickname").empty().append("<p>Welkom " + nickname + "</p>").show().css("visibility", "visible");
+        $("#shownickname").empty().append("<p>Welkom, " + nickname + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
         $("#registercontainer").hide().css('visibility', 'hidden');
         $(".disabled").disabled = false;
@@ -343,7 +343,7 @@ function register() {
             });
         },
         error: function(request, error) {
-            alert("Nickname already exists!");
+            alert("Nickname already exists or not all required fields are filled in.");
         }
     });
 }
@@ -358,7 +358,7 @@ function getUsers() {
         },
         success: function(data) {
             $.each(data, function(index, value) {
-                if (value.insert === null) {
+                if (value.insert === null || value.insert ==="") {
                     value.insert = "-";
                 }
                 $("#expList").append("<li class='list-group-item glyphicon glyphicon-chevron-down'>  " + value.nickName + "<ul><li>Firstname: " + value.firstName +

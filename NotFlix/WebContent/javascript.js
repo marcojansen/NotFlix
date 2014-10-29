@@ -168,7 +168,9 @@ function getMovies() {
             "Token": localStorage.getItem("Token")
         }
     }).fail(function(jqXHR, textStatus) {
-        alert("Get movies Request failed: " + textStatus);
+    	 $.mobile.changePage("#moviespage", {
+             transition: "flow"
+         });
     }).done(function(data) {
         movies = data;
         $.each(data, function(index, value) {
@@ -182,7 +184,6 @@ function getMovies() {
                 "Token": localStorage.getItem("Token")
             }
         }).fail(function(jqXHR, textStatus) {
-            alert("Get movies Request failed: " + textStatus);
         }).done(function(data) {
             unratedmovies = data;
             $.each(data, function(index, value) {
