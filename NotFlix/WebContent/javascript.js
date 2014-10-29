@@ -174,22 +174,22 @@ function getMovies() {
         $.each(data, function(index, value) {
             $("#movielist").append("<li data-icon='check'> <a href=\"#\">" + value.title + "</a></li>");
         });
-        $("#movielist").listview("refresh");
-    });
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/NotFlix/resources/ratings/unrated',
-        dataType: "json",
-        headers: {
-            "Token": localStorage.getItem("Token")
-        }
-    }).fail(function(jqXHR, textStatus) {
-        alert("Get movies Request failed: " + textStatus);
-    }).done(function(data) {
-        unratedmovies = data;
-        $.each(data, function(index, value) {
-            $("#movielist").append("<li data-icon='star'> <a href=\"#\">" + value.title + "</a></li>");
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/NotFlix/resources/ratings/unrated',
+            dataType: "json",
+            headers: {
+                "Token": localStorage.getItem("Token")
+            }
+        }).fail(function(jqXHR, textStatus) {
+            alert("Get movies Request failed: " + textStatus);
+        }).done(function(data) {
+            unratedmovies = data;
+            $.each(data, function(index, value) {
+                $("#movielist").append("<li data-icon='star'> <a href=\"#\">" + value.title + "</a></li>");
+            });
+            $("#movielist").listview("refresh");
         });
-        $("#movielist").listview("refresh");
     });
+    
 }

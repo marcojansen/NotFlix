@@ -54,6 +54,19 @@ function setMovie(index) {
     });
 }
 
+function prepareList() {
+	  $('#expList').find('li:has(ul)')
+	  	.click( function(event) {
+	  		if (this == event.target) {
+	  			$(this).toggleClass('expanded');
+	  			$(this).children('ul').toggle('medium');
+	  		}
+	  		return false;
+	  	})
+	  	.addClass('collapsed')
+	  	.children('ul').hide();
+	  };
+
 /**
  * Ajax calls from here --------------
  */
@@ -191,12 +204,14 @@ function getUsers() {
         url: 'http://localhost:8080/NotFlix/resources/users',
         dataType: 'json',
         headers: {
-            'Token': localStorage.getItem("Token ")
+            'Token': localStorage.getItem("Token")
         },
         success: function(data) {
             $.each(data, function(index, value) {
-                // Do something with user objects ( value  equals user object)
+                $("#expList").append("<li>" + value.nickName + "<ul><li>Firstname: " + value.firstName +
+                		"</li><li>Lastname: " + value.lastName + "</li></ul></li>");
             });
+            prepareList();
         },
         error: function(request, error) {
             alert("Get users gone wrong ");

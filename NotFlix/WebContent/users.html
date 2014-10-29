@@ -31,7 +31,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body onload="getUsers()">
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -48,7 +48,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="computer.html">Movies</a>
                     </li>
-                    <li class = "active"><a href="users.html">Users</a>
+                    <li class="active"><a href="users.html">Users</a>
                     </li>
                 </ul>
                 <form class="navbar-form navbar-right" id="loginform">
@@ -70,6 +70,10 @@
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
+    <div id="listContainer">
+  <ul id="expList">
+  </ul>
+</div>
         <footer>
             <p>&copy; NotFlix</p>
         </footer>
