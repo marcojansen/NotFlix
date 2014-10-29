@@ -2,6 +2,12 @@
     visibility: hidden;
     display: none;
     color: white;
+    max-height: 34px;
+    width: 300px;
+}
+#logout {
+    visibility: hidden;
+    display: none;
 }
 #movieimage {
     margin: 20px;
@@ -20,7 +26,7 @@
     background-color: lightgrey;
     cursor: pointer;
 }
-#listitemimage {} #movielistcontainer {
+#movielistcontainer {
     max-width: 60%;
 }
 #movielist {

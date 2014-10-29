@@ -4,6 +4,7 @@ $(document).ready(function() {
     if (localStorage.getItem('nickname') !== null) {
         $("#loginform").hide().css("visibility", "hidden");
         $("#shownickname").empty().append("<p>Welkom " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
+        $("#logout").show().css("visibility", "visible");
     }
     getMovies();
 
@@ -11,10 +12,17 @@ $(document).ready(function() {
         logIn();
     });
 
+    $("#logoutbutton").click(function() {
+        logOut();
+    });
+
     $(document).on("click", "#movielistitem", function(e) {
         var index = $(this).index();
         console.log("list item " + index + " clicked");
         setMovie(index);
+        $("html, body").animate({
+            scrollTop: 0
+        }, "slow");
     });
 });
 
@@ -22,12 +30,26 @@ function logOut() {
     localStorage.clear();
     $("#loginform").show().css("visibility", "visible");
     $("#shownickname").hide().css("visibility", "hidden");
+    $("#logout").hide().css("visibility", "hidden");
 }
 
 function setMovie(index) {
     $.each(movies, function(curIndex, value) {
         if (curIndex == index) {
-            getImageByMovieSummary(value);
+            $("#moviesummary").empty();
+            $("#moviesummary").append(
+                '<img src="" id="movieimage"/>' +
+                '<h2 id="movietitle">' + value.title + '</h2>' +
+                '<p id="movielength">Length: ' + value.length + '</p > '
+            );
+            if (value.averageRating > 0) {
+                $("#moviesummary").append(' <p id ="movieavgrating">Average rating ' + value.averageRating + ' </p>');
+            }
+            $("#moviesummary").append(
+                '<p id="moviedirector">Directed by: ' + value.director + '</p > ' +
+                '<p id="shortdesc">' + value.shortDesc + '</p>'
+            );
+            getImageByMovie(value, "#movieimage");
         }
     });
 }
@@ -49,6 +71,7 @@ function logIn() {
     }).done(function(data) {
         $("#loginform").hide().css("visibility", "hidden");
         $("#shownickname").empty().append("<p>Welkom " + nickname + "</p>").show().css("visibility", "visible");
+        $("#logout").show().css("visibility", "visible");
 
         $.each(data, function(index, value) {
             localStorage.setItem("Token", value);
@@ -72,15 +95,38 @@ function getMovies() {
         $.each(data, function(index, value) {
             console.log("get movies " + index);
             if (index == 0) {
-                getImageByMovieSummary(value);
+                $("#moviesummary").empty();
+                $("#moviesummary").append(
+                    '<img src="" id="movieimage"/>' +
+                    '<h2 id="movietitle">' + value.title + '</h2>' +
+                    '<p id="movielength">Length: ' + value.length + '</p > '
+                );
+                if (value.averageRating > 0) {
+                    $("#moviesummary").append(' < p id = "movieavgrating" > Average rating ' + value.averageRating + ' < /p>');
+                }
+                $("#moviesummary").append(
+                    '<p id="moviedirector">Directed by: ' + value.director + '</p > ' +
+                    '<p id="shortdesc">' + value.shortDesc + '</p>'
+                );
+                getImageByMovie(value, "#movieimage");
             }
-            getImageByMovieList(value);
+            $("#movielist").append(
+                '<tr class="list-group" id="movielistitem">' +
+                '<td> ' +
+                '<img class="listimage" id="listitemimage' + index + '" src=""/>' +
+                '</td>' +
+                '<td id="listitemtitle ">' +
+                '<h4 class="list - group - item - heading ">' + value.title + '</h4>' +
+                '</td>' +
+                '</tr>'
+            );
+            getImageByMovie(value, "#listitemimage" + index);
         });
 
     });
 }
 
-function getImageByMovieSummary(movie) {
+function getImageByMovie(movie, imgid) {
     console.log(movie);
     var movieTitle = encodeURIComponent(movie.title);
     var movieYear = encodeURIComponent(movie.date);
@@ -93,19 +139,7 @@ function getImageByMovieSummary(movie) {
     }).done(function(data) {
         console.log("omdb movie successfully loaded: " + data.Poster);
         var imageUrl = data.Poster;
-        $("#moviesummary").empty();
-        $("#moviesummary").append(
-            '<img src="' + data.Poster + '" id="movieimage"/>' +
-            '<h2 id="movietitle">' + movie.title + '</h2>' +
-            '<p id="movielength">Length: ' + movie.length + '</p > '
-        );
-        if (movie.averageRating > 0) {
-            $("#moviesummary").append(' < p id = "movieavgrating" > Average rating ' + movie.averageRating + ' < /p>');
-        }
-        $("#moviesummary").append(
-            '<p id="moviedirector">Directed by: ' + movie.director + '</p > ' +
-            '<p id="shortdesc">' + movie.shortDesc + '</p>'
-        );
+        $(imgid).attr("src", imageUrl)
     });
 }
 
