@@ -92,7 +92,7 @@ function setMovie(index) {
                     '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
                     '<span class="input-group-btn"><button onclick="javascript: doRating()" id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>'
                 );
-                if (typeof $("#mymovierating").val(value.rating) !== "undefined") {
+                if (typeof value.rating !== "undefined") {
                     $("#moviesummary").append(
                         '<span class="input-group-addon">' +
                         '<button onclick="javascript: deleteRating()" id="deleteratingbutton" class="btn btn-default" type="button">Delete!</button>' +
@@ -106,6 +106,48 @@ function setMovie(index) {
             getImageByMovie(value, "#movieimage");
         }
     });
+}
+
+function setTopMovie(movie) {
+    movieontop = movie;
+    $("#moviesummary").empty();
+    $("#moviesummary").append(
+        '<img src="" id="movieimage"/>' +
+        '<h2 id="movietitle">' + movie.title + '</h2>' +
+        '<p id="movielength">Length: ' + movie.length + '</p>'
+    );
+    if (movie.averageRating > 0) {
+        $("#moviesummary").append('<p id="movieavgrating">Average rating ' + movie.averageRating + '</p>');
+    }
+    $("#moviesummary").append(
+        '<p id="moviedirector">Directed by: ' + movie.director + '</p > ' +
+        '<p id="shortdesc">' + movie.shortDesc + '</p>'
+    );
+    if (loggedIn) {
+        $("#moviesummary").append(
+            '<div class="input-group">' +
+            '<span class="input-group-addon">Your rating</span>' +
+            '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
+            '<span class="input-group-btn"><button onclick="javascript: doRating()" id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>' +
+            '</div>'
+        );
+        $("#mymovierating").val(movie.rating);
+    }
+    getImageByMovie(movie, "#movieimage");
+}
+
+function addToList(movie, index) {
+    $("#movielist").append(
+        '<tr class="list-group" id="movielistitem">' +
+        '<td> ' +
+        '<img class="listimage" id="listitemimage' + index + '" src=""/>' +
+        '</td>' +
+        '<td id="listitemtitle ">' +
+        '<h4 class="list - group - item - heading ">' + movie.title + '</h4>' +
+        '</td>' +
+        '</tr>'
+    );
+    getImageByMovie(movie, "#listitemimage" + index);
 }
 
 function prepareList() {
@@ -160,43 +202,9 @@ function getMovies() {
             $("#movielist").empty();
             $.each(data, function(index, value) {
                 if (index == 0) {
-                    movieontop = value;
-                    $("#moviesummary").empty();
-                    $("#moviesummary").append(
-                        '<img src="" id="movieimage"/>' +
-                        '<h2 id="movietitle">' + value.title + '</h2>' +
-                        '<p id="movielength">Length: ' + value.length + '</p>'
-                    );
-                    if (value.averageRating > 0) {
-                        $("#moviesummary").append('<p id="movieavgrating">Average rating ' + value.averageRating + '</p>');
-                    }
-                    $("#moviesummary").append(
-                        '<p id="moviedirector">Directed by: ' + value.director + '</p > ' +
-                        '<p id="shortdesc">' + value.shortDesc + '</p>'
-                    );
-                    if (loggedIn) {
-                        $("#moviesummary").append(
-                            '<div class="input-group">' +
-                            '<span class="input-group-addon">Your rating</span>' +
-                            '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
-                            '<span class="input-group-btn"><button onclick="javascript: doRating()" id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>' +
-                            '</div>'
-                        );
-                        $("#mymovierating").val(value.rating);
-                    }
-                    getImageByMovie(value, "#movieimage");
+                    setTopMovie(value);
                 }
-                $("#movielist").append(
-                    '<tr class="list-group" id="movielistitem">' +
-                    '<td> ' +
-                    '<img class="listimage" id="listitemimage' + index + '" src=""/>' +
-                    '</td>' +
-                    '<td id="listitemtitle ">' +
-                    '<h4 class="list - group - item - heading ">' + value.title + '</h4>' +
-                    '</td>' +
-                    '</tr>'
-                );
-                getImageByMovie(value, "#listitemimage" + index);
+                addToList(value, index);
             });
 
         });
@@ -217,44 +225,9 @@ function getMovies() {
             $.each(data, function(index, value) {
                 listindex = index;
                 if (index == 0) {
-                    movieontop = value;
-                    console.log("Summary made");
-                    $("#moviesummary").empty();
-                    $("#moviesummary").append(
-                        '<img src="" id="movieimage"/>' +
-                        '<h2 id="movietitle">' + value.title + '</h2>' +
-                        '<p id="movielength">Length: ' + value.length + '</p>'
-                    );
-                    if (value.averageRating > 0) {
-                        $("#moviesummary").append('<p id="movieavgrating">Average rating ' + value.averageRating + '</p>');
-                    }
-                    $("#moviesummary").append(
-                        '<p id="moviedirector">Directed by: ' + value.director + '</p > ' +
-                        '<p id="shortdesc">' + value.shortDesc + '</p>'
-                    );
-                    if (loggedIn) {
-                        $("#moviesummary").append(
-                            '<div class="input-group">' +
-                            '<span class="input-group-addon">Your rating</span>' +
-                            '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
-                            '<span class="input-group-btn"><button onclick="javascript: doRating()" id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>' +
-                            '</div>'
-                        );
-                        $("#mymovierating").val(value.rating);
-                    }
-                    getImageByMovie(value, "#movieimage");
+                    setTopMovie(value);
                 }
-                $("#movielist").append(
-                    '<tr class="list-group" id="movielistitem">' +
-                    '<td> ' +
-                    '<img class="listimage" id="listitemimage' + index + '" src=""/>' +
-                    '</td>' +
-                    '<td id="listitemtitle ">' +
-                    '<h4 class="list - group - item - heading ">' + value.title + '</h4>' +
-                    '</td>' +
-                    '</tr>'
-                );
-                getImageByMovie(value, "#listitemimage" + index);
+                addToList(value, index);
             });
             $.ajax({
                 type: 'GET',
@@ -271,43 +244,9 @@ function getMovies() {
                 $.each(data, function(index, value) {
                     listindex = listindex + index;
                     if (index == 0) {
-                        movieontop = value;
-                        $("#moviesummary").empty();
-                        $("#moviesummary").append(
-                            '<img src="" id="movieimage"/>' +
-                            '<h2 id="movietitle">' + value.title + '</h2>' +
-                            '<p id="movielength">Length: ' + value.length + '</p>'
-                        );
-                        if (value.averageRating > 0) {
-                            $("#moviesummary").append('<p id="movieavgrating">Average rating ' + value.averageRating + '</p>');
-                        }
-                        $("#moviesummary").append(
-                            '<p id="moviedirector">Directed by: ' + value.director + '</p > ' +
-                            '<p id="shortdesc">' + value.shortDesc + '</p>'
-                        );
-                        if (loggedIn) {
-                            $("#moviesummary").append(
-                                '<div class="input-group">' +
-                                '<span class="input-group-addon">Your rating</span>' +
-                                '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
-                                '<span class="input-group-btn"><button id="ratingbutton" onclick="javascript: doRating()" class="btn btn-default" type="button">Change!</button></span>' +
-                                '</div>'
-                            );
-                            $("#mymovierating").val(value.rating);
-                        }
-                        getImageByMovie(value, "#movieimage");
+                        setTopMovie(value);
                     }
-                    $("#movielist").append(
-                        '<tr class="list-group" id="movielistitem">' +
-                        '<td> ' +
-                        '<img class="listimage" id="listitemimage' + listindex + '" src=""/>' +
-                        '</td>' +
-                        '<td id="listitemtitle ">' +
-                        '<h4 class="list - group - item - heading ">' + value.title + '</h4>' +
-                        '</td>' +
-                        '</tr>'
-                    );
-                    getImageByMovie(value, "#listitemimage" + listindex);
+                    addToList(value, listindex);
                 });
             });
         });
