@@ -207,6 +207,22 @@ function register() {
     });
 }
 
+function register() {
+	$.ajax({
+		type:'post',
+		url:'http://localhost:8080/NotFlix/resources/users',
+		dataType: 'json',
+		data: $("#registerform").serialize(),
+		success: function(data) {
+			$.each(data, function(index,value) {
+				console.log(value);
+			});
+		},
+		error: function(request,error) {
+			console.log($('#registerform').serialize());
+		}
+	});
+}
 function getUsers() {
     $.ajax({
         type: 'get',
