@@ -130,7 +130,7 @@ function logIn() {
         dataType: "json",
         data: $("#loginform").serialize()
     }).fail(function(jqXHR, textStatus) {
-        alert("Post login Request failed: " + textStatus);
+        alert("Invalid nickname or password.");
 
     }).done(function(data) {
         $("#loginform").hide().css("visibility", "hidden");
@@ -211,6 +211,7 @@ function getMovies() {
             }
         }).fail(function(jqXHR, textStatus) {
             alert("Get movies Request failed: " + textStatus);
+            logOut();
         }).done(function(data) {
             movies = data;
             var listindex = 0;
@@ -265,6 +266,7 @@ function getMovies() {
                 }
             }).fail(function(jqXHR, textStatus) {
                 alert("Get movies Request failed: " + textStatus);
+                logOut();
             }).done(function(data) {
                 unratedmovies = data;
                 listindex++;
