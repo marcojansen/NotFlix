@@ -240,8 +240,11 @@ function getUsers() {
         },
         success: function(data) {
             $.each(data, function(index, value) {
-                $("#expList").append("<li>" + value.nickName + "<ul><li>Firstname: " + value.firstName +
-                    "</li><li>Lastname: " + value.lastName + "</li></ul></li>");
+            	if (value.insert === null) {
+            		value.insert = "-";
+            	} 
+                $("#expList").append("<li class='list-group-item glyphicon glyphicon-chevron-down'>  " + value.nickName + "<ul><li>Firstname: " + value.firstName +
+                    "</li><li>Lastname: " + value.lastName + "</li>" + "<li>Insert: " + value.insert + "</li></ul></li>");
             });
             prepareList();
         },
