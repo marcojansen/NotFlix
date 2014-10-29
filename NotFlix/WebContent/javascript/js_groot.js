@@ -1,10 +1,13 @@
 var movies;
+var rankedMovies;
+var loggedIn = false;
 
 $(document).ready(function() {
     if (localStorage.getItem('nickname') !== null) {
         $("#loginform").hide().css("visibility", "hidden");
         $("#shownickname").empty().append("<p>Welkom " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
+        loggedIn = true;
     }
     getMovies();
 
@@ -31,6 +34,8 @@ function logOut() {
     $("#loginform").show().css("visibility", "visible");
     $("#shownickname").hide().css("visibility", "hidden");
     $("#logout").hide().css("visibility", "hidden");
+    window.location = "computer.html";
+    loggedIn = false;
 }
 
 function setMovie(index) {
@@ -49,23 +54,27 @@ function setMovie(index) {
                 '<p id="moviedirector">Directed by: ' + value.director + '</p > ' +
                 '<p id="shortdesc">' + value.shortDesc + '</p>'
             );
+            if (loggedIn) {
+                console.log("slider has been added");
+                $("#moviesummary").append('<input id="movierating" data-slider-id="movieratingslider" type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="0"/>');
+            }
             getImageByMovie(value, "#movieimage");
         }
     });
 }
 
 function prepareList() {
-	  $('#expList').find('li:has(ul)')
-	  	.click( function(event) {
-	  		if (this == event.target) {
-	  			$(this).toggleClass('expanded');
-	  			$(this).children('ul').toggle('medium');
-	  		}
-	  		return false;
-	  	})
-	  	.addClass('collapsed')
-	  	.children('ul').hide();
-	  };
+    $('#expList').find('li:has(ul)')
+        .click(function(event) {
+            if (this == event.target) {
+                $(this).toggleClass('expanded');
+                $(this).children('ul').toggle('medium');
+            }
+            return false;
+        })
+        .addClass('collapsed')
+        .children('ul').hide();
+};
 
 /**
  * Ajax calls from here --------------
@@ -85,11 +94,11 @@ function logIn() {
         $("#loginform").hide().css("visibility", "hidden");
         $("#shownickname").empty().append("<p>Welkom " + nickname + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
-
+        loggedIn = true;
         $.each(data, function(index, value) {
             localStorage.setItem("Token", value);
         });
-
+        location.reload();
     });
 }
 
@@ -209,7 +218,7 @@ function getUsers() {
         success: function(data) {
             $.each(data, function(index, value) {
                 $("#expList").append("<li>" + value.nickName + "<ul><li>Firstname: " + value.firstName +
-                		"</li><li>Lastname: " + value.lastName + "</li></ul></li>");
+                    "</li><li>Lastname: " + value.lastName + "</li></ul></li>");
             });
             prepareList();
         },
