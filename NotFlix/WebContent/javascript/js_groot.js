@@ -21,7 +21,7 @@ $(document).ready(function() {
     });
     if (localStorage.getItem('nickname') !== null) {
         $("#loginform").hide().css("visibility", "hidden");
-        $("#shownickname").empty().append("<p>Welkom " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
+        $("#shownickname").empty().append("<p>Welkom, " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
         $("#registercontainer").show().css('visibility', 'hidden');
         $(".disabled").disabled = false;
@@ -172,11 +172,11 @@ function logIn() {
         dataType: "json",
         data: $("#loginform").serialize()
     }).fail(function(jqXHR, textStatus) {
-        alert("Post login Request failed: " + textStatus);
+        alert("Invalid nickname or password.");
 
     }).done(function(data) {
         $("#loginform").hide().css("visibility", "hidden");
-        $("#shownickname").empty().append("<p>Welkom " + nickname + "</p>").show().css("visibility", "visible");
+        $("#shownickname").empty().append("<p>Welkom, " + nickname + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
         $("#registercontainer").hide().css('visibility', 'hidden');
         $(".disabled").disabled = false;
@@ -219,6 +219,7 @@ function getMovies() {
             }
         }).fail(function(jqXHR, textStatus) {
             alert("Get movies Request failed: " + textStatus);
+            logOut();
         }).done(function(data) {
             movies = data;
             var listindex = 0;
@@ -238,6 +239,7 @@ function getMovies() {
                 }
             }).fail(function(jqXHR, textStatus) {
                 alert("Get movies Request failed: " + textStatus);
+                logOut();
             }).done(function(data) {
                 unratedmovies = data;
                 listindex++;
@@ -282,7 +284,7 @@ function register() {
             });
         },
         error: function(request, error) {
-            alert("Nickname already exists!");
+            alert("Nickname already exists or not all required fields are filled in.");
         }
     });
 }
@@ -297,7 +299,7 @@ function getUsers() {
         },
         success: function(data) {
             $.each(data, function(index, value) {
-                if (value.insert === null) {
+                if (value.insert === null || value.insert ==="") {
                     value.insert = "-";
                 }
                 $("#expList").append("<li class='list-group-item glyphicon glyphicon-chevron-down'>  " + value.nickName + "<ul><li>Firstname: " + value.firstName +
@@ -306,7 +308,8 @@ function getUsers() {
             prepareList();
         },
         error: function(request, error) {
-            alert("Get users gone wrong ");
+            alert("Not logged in or invalid token.");
+            window.location= "computer.html";
         }
 
     });
