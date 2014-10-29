@@ -4,21 +4,21 @@ var loggedIn = false;
 var movieontop;
 
 $(document).ready(function() {
-    $( "#dialog" ).dialog({
+    $("#dialog").dialog({
         autoOpen: false,
         width: 300,
         show: {
             effect: "explode",
             duration: 1000
-          },
-          hide: {
+        },
+        hide: {
             effect: "explode",
             duration: 1000
-          }
-      });
-      $( "#registerbutton" ).click(function() {
-        $( "#dialog" ).dialog( "open" );
-      });
+        }
+    });
+    $("#registerbutton").click(function() {
+        $("#dialog").dialog("open");
+    });
     if (localStorage.getItem('nickname') !== null) {
         $("#loginform").hide().css("visibility", "hidden");
         $("#shownickname").empty().append("<p>Welkom " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
@@ -90,9 +90,17 @@ function setMovie(index) {
                     '<div class="input-group">' +
                     '<span class="input-group-addon">Your rating</span>' +
                     '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
-                    '<span class="input-group-btn"><button onclick="javascript: doRating()" id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>' +
-                    '</div>'
+                    '<span class="input-group-btn"><button onclick="javascript: doRating()" id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>'
                 );
+                if (typeof $("#mymovierating").val(value.rating) !== "undefined") {
+                    $("#moviesummary").append(
+                        '<span class="input-group-addon">' +
+                        '<button onclick="javascript: deleteRating()" id="deleteratingbutton" class="btn btn-default" type="button">Delete!</button>' +
+                        '</span></div>'
+                    );
+                } else {
+                    $("#moviesummary").append('</div>');
+                }
                 $("#mymovierating").val(value.rating);
             }
             getImageByMovie(value, "#movieimage");
@@ -329,9 +337,9 @@ function register() {
         data: $("#registerform").serialize(),
         success: function(data) {
             $.each(data, function(index, value) {
-            	
+
                 alert("Geregistreerd");
-                $( "#dialog" ).dialog( "close" );
+                $("#dialog").dialog("close");
             });
         },
         error: function(request, error) {
@@ -391,4 +399,22 @@ function doRating() {
     } else {
         alert("not a good number");
     }
+}
+
+function deleteRating() {
+    $.ajax({
+        url: 'http://localhost:8080/NotFlix/resources/ratings',
+        data: 'imdb=' + movieontop.imdb,
+        headers: {
+            'Token': localStorage.getItem("Token")
+        },
+        type: 'delete',
+        complete: function() {},
+        success: function(data) {
+            getMovies();
+        },
+        error: function(request, error) {
+            alert('fail: ' + error);
+        }
+    });
 }
