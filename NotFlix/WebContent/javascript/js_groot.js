@@ -9,7 +9,10 @@ $(document).ready(function() {
         $("#shownickname").empty().append("<p>Welkom " + localStorage.getItem('nickname') + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
         $("#registercontainer").show().css('visibility', 'hidden');
+        $(".disabled").disabled = false;
         loggedIn = true;
+    } else {
+        $("#usersbutton").hide().css("visibility", "hidden");
     }
     getMovies();
 
@@ -42,7 +45,8 @@ function logOut() {
     $("#loginform").show().css("visibility", "visible");
     $("#shownickname").hide().css("visibility", "hidden");
     $("#logout").hide().css("visibility", "hidden");
-    $("#registercontainer").show().css('visibility', 'visiable');
+    $("#registercontainer").show().css('visibility', 'visible');
+    $("#usersbutton").hide().css("visibility", "hidden");
     window.location = "computer.html";
     loggedIn = false;
 }
@@ -113,6 +117,7 @@ function logIn() {
         $("#shownickname").empty().append("<p>Welkom " + nickname + "</p>").show().css("visibility", "visible");
         $("#logout").show().css("visibility", "visible");
         $("#registercontainer").hide().css('visibility', 'hidden');
+        $(".disabled").disabled = false;
         loggedIn = true;
         $.each(data, function(index, value) {
             localStorage.setItem("Token", value);
