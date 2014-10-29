@@ -19,12 +19,12 @@ public class Model {
 	 * Adds two movies and two users to their respective lists
 	 */
 	public Model() {
-		movies.add(new Movie("1234", "Breaking Bad", "2012", 138, "Steven Seagal", "Deze film is een serie"));
-		movies.add(new Movie("1235","Breaking Good","2013",140,"Steven Seagul","Een serie over het goede pad bewandelen"));
-		movies.add(new Movie("1236","Prison Break","2008",80,"Spielberg","Een serie over een gevangenis"));
-		movies.add(new Movie("1250","The November Man","2014",90,"Roger Donaldson","An ex-CIA operative is brought back in on a very personal mission."));
-		movies.add(new Movie("1280","Equalizer","2014",101,"Antoine Fuqua","Een film die over actie gaat"));
-		movies.add(new Movie("1281","Step up: all in","2014",98,"Trish Shie","Een dans film"));
+		movies.add(new Movie("tt1924435", "Let's Be Cops", "2014", 104, "Luke Greenfield", "Two struggling pals dress as police officers for a costume party and become neighborhood sensations. But when these newly-minted \"heroes\" get tangled in a real life web of mobsters and dirty detectives, they must put their fake badges on the line."));
+		movies.add(new Movie("tt2557490","A Million Ways to Die in the West","2014",116,"Seth MacFarlane","As a cowardly farmer begins to fall for the mysterious new woman in town, he must put his new-found courage to the test when her husband, a notorious gun-slinger, announces his arrival."));
+		movies.add(new Movie("tt2294449","22 Jump Street","2014",80,"Phil Lord","After making their way through high school (twice), big changes are in store for officers Schmidt and Jenko when they go deep undercover at a local college."));
+		movies.add(new Movie("tt2402157","The November Man","2014",108,"Roger Donaldson","An ex-CIA operative is brought back in on a very personal mission."));
+		movies.add(new Movie("tt0455944","Equalizer","2014",132,"Antoine Fuqua","A man believes he has put his mysterious past behind him and has dedicated himself to beginning a new, quiet life. But when he meets a young girl under the control of ultra-violent Russian gangsters, he can't stand idly by - he has to help her."));
+		movies.add(new Movie("tt2713180","Fury","2014",134,"David Ayer","April, 1945. As the Allies make their final push in the European Theatre, a battle-hardened army sergeant named Wardaddy commands a Sherman tank and his five-man crew on a deadly mission behind enemy lines. Out-numbered, out-gunned, and with a rookie soldier thrust into their platoon, Wardaddy and his men face overwhelming odds in their heroic attempts to strike at the heart of Nazi Germany."));
 		
 		users.add(new User("paul", null, "goolkate","paul","goolkate"));
 		users.add(new User("marco", null, "jansen", "marco", "jansen"));
