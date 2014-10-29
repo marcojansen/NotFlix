@@ -48,7 +48,7 @@ function setMovie(index) {
                 '<p id="movielength">Length: ' + value.length + '</p > '
             );
             if (value.averageRating > 0) {
-                $("#moviesummary").append(' <p id ="movieavgrating">Average rating ' + value.averageRating + ' </p>');
+                $("#moviesummary").append('<p id="movieavgrating">Average rating ' + value.averageRating + ' </p>');
             }
             $("#moviesummary").append(
                 '<p id="moviedirector">Directed by: ' + value.director + '</p > ' +
@@ -56,7 +56,13 @@ function setMovie(index) {
             );
             if (loggedIn) {
                 console.log("slider has been added");
-                $("#moviesummary").append('<input id="movierating" data-slider-id="movieratingslider" type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="0"/>');
+                $("#moviesummary").append(
+                    '<div class="input-group">' +
+                    '<span class="input-group-addon">Your rating</span>' +
+                    '<input type="text" class="form-control" placeholder="Rating">' +
+                    '<span class="input-group-btn"><button class="btn btn-default" type="button">Change!</button></span>' +
+                    '</div>'
+                );
             }
             getImageByMovie(value, "#movieimage");
         }
@@ -64,17 +70,14 @@ function setMovie(index) {
 }
 
 function prepareList() {
-    $('#expList').find('li:has(ul)')
-        .click(function(event) {
-            if (this == event.target) {
-                $(this).toggleClass('expanded');
-                $(this).children('ul').toggle('medium');
-            }
-            return false;
-        })
-        .addClass('collapsed')
-        .children('ul').hide();
-};
+    $('#expList').find('li:has(ul)').click(function(event) {
+        if (this == event.target) {
+            $(this).toggleClass('expanded');
+            $(this).children('ul').toggle('medium');
+        }
+        return false;
+    }).addClass('collapsed').children('ul').hide();
+}
 
 /**
  * Ajax calls from here --------------
@@ -121,15 +124,25 @@ function getMovies() {
                 $("#moviesummary").append(
                     '<img src="" id="movieimage"/>' +
                     '<h2 id="movietitle">' + value.title + '</h2>' +
-                    '<p id="movielength">Length: ' + value.length + '</p > '
+                    '<p id="movielength">Length: ' + value.length + '</p>'
                 );
                 if (value.averageRating > 0) {
-                    $("#moviesummary").append(' < p id = "movieavgrating" > Average rating ' + value.averageRating + ' < /p>');
+                    $("#moviesummary").append('<p id="movieavgrating">Average rating ' + value.averageRating + '</p>');
                 }
                 $("#moviesummary").append(
                     '<p id="moviedirector">Directed by: ' + value.director + '</p > ' +
                     '<p id="shortdesc">' + value.shortDesc + '</p>'
                 );
+                if (loggedIn) {
+                    console.log("slider has been added");
+                    $("#moviesummary").append(
+                        '<div class="input-group">' +
+                        '<span class="input-group-addon">Your rating</span>' +
+                        '<input type="text" class="form-control" placeholder="Rating">' +
+                        '<span class="input-group-btn"><button class="btn btn-default" type="button">Change!</button></span>' +
+                        '</div>'
+                    );
+                }
                 getImageByMovie(value, "#movieimage");
             }
             $("#movielist").append(
