@@ -1,6 +1,7 @@
 var movies;
 var rankedMovies;
 var loggedIn = false;
+var movieontop;
 
 $(document).ready(function() {
     if (localStorage.getItem('nickname') !== null) {
@@ -22,9 +23,9 @@ $(document).ready(function() {
     $("#registerbutton").click(function() {
         window.location = "register.html";
     });
-
     $("#ratingbutton").click(function() {
-
+        console.log("rating button clicked");
+        doRating();
     });
 
     $(document).on("click", "#movielistitem", function(e) {
@@ -54,6 +55,7 @@ function setMovie(index) {
     }
     $.each(curmovies, function(curIndex, value) {
         if (curIndex == index) {
+            movieontop = value;
             $("#moviesummary").empty();
             $("#moviesummary").append(
                 '<img src="" id="movieimage"/>' +
@@ -72,12 +74,12 @@ function setMovie(index) {
                     '<div class="input-group">' +
                     '<span class="input-group-addon">Your rating</span>' +
                     '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
-                    '<span class="input-group-btn"><button class="btn btn-default" type="button">Change!</button></span>' +
+                    '<span class="input-group-btn"><button onclick="javascript: doRating()" id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>' +
                     '</div>'
                 );
                 $("#mymovierating").val(value.rating);
-                getImageByMovie(value, "#movieimage");
             }
+            getImageByMovie(value, "#movieimage");
         }
     });
 }
@@ -133,6 +135,7 @@ function getMovies() {
             $("#movielist").empty();
             $.each(data, function(index, value) {
                 if (index == 0) {
+                    movieontop = value;
                     $("#moviesummary").empty();
                     $("#moviesummary").append(
                         '<img src="" id="movieimage"/>' +
@@ -150,10 +153,11 @@ function getMovies() {
                         $("#moviesummary").append(
                             '<div class="input-group">' +
                             '<span class="input-group-addon">Your rating</span>' +
-                            '<input type="text" class="form-control" placeholder="Rating">' +
-                            '<span class="input-group-btn"><button class="btn btn-default" type="button">Change!</button></span>' +
+                            '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
+                            '<span class="input-group-btn"><button onclick="javascript: doRating()" id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>' +
                             '</div>'
                         );
+                        $("#mymovierating").val(value.rating);
                     }
                     getImageByMovie(value, "#movieimage");
                 }
@@ -188,6 +192,7 @@ function getMovies() {
             $.each(data, function(index, value) {
                 listindex = index;
                 if (index == 0) {
+                    movieontop = value;
                     console.log("Summary made");
                     $("#moviesummary").empty();
                     $("#moviesummary").append(
@@ -206,11 +211,11 @@ function getMovies() {
                         $("#moviesummary").append(
                             '<div class="input-group">' +
                             '<span class="input-group-addon">Your rating</span>' +
-                            '<input type="text" id="yourmovierating" class="form-control" placeholder="Rating">' +
-                            '<span class="input-group-btn"><button id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>' +
+                            '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
+                            '<span class="input-group-btn"><button onclick="javascript: doRating()" id="ratingbutton" class="btn btn-default" type="button">Change!</button></span>' +
                             '</div>'
                         );
-                        $("#yourmovierating").val(value.rating);
+                        $("#mymovierating").val(value.rating);
                     }
                     getImageByMovie(value, "#movieimage");
                 }
@@ -241,6 +246,7 @@ function getMovies() {
                 $.each(data, function(index, value) {
                     listindex = listindex + index;
                     if (index == 0) {
+                        movieontop = value;
                         $("#moviesummary").empty();
                         $("#moviesummary").append(
                             '<img src="" id="movieimage"/>' +
@@ -258,10 +264,11 @@ function getMovies() {
                             $("#moviesummary").append(
                                 '<div class="input-group">' +
                                 '<span class="input-group-addon">Your rating</span>' +
-                                '<input type="text" class="form-control" placeholder="Rating">' +
-                                '<span class="input-group-btn"><button class="btn btn-default" type="button">Change!</button></span>' +
+                                '<input id="mymovierating" type="text" class="form-control" placeholder="Rating">' +
+                                '<span class="input-group-btn"><button id="ratingbutton" onclick="javascript: doRating()" class="btn btn-default" type="button">Change!</button></span>' +
                                 '</div>'
                             );
+                            $("#mymovierating").val(value.rating);
                         }
                         getImageByMovie(value, "#movieimage");
                     }
@@ -297,31 +304,6 @@ function getImageByMovie(movie, imgid) {
     });
 }
 
-function getImageByMovieList(movie) {
-    var movieTitle = encodeURIComponent(movie.title);
-    var movieYear = encodeURIComponent(movie.date);
-    $.ajax({
-        type: 'GET',
-        url: 'http://www.omdbapi.com/?t=' + movieTitle + '&y=' + movieYear,
-        dataType: "json"
-    }).fail(function(jqXHR, textStatus) {
-        alert("Get image Request failed: " + textStatus);
-    }).done(function(data) {
-        var imageUrl = data.Poster;
-        $("#movielist").append(
-            '<tr class="list-group" id="movielistitem">' +
-            '<td id="listitemimage" > ' +
-            '<img class="listimage" src=' + imageUrl + '"/>' +
-            '</td>' +
-            '<td id="listitemtitle ">' +
-            '<h4 class="list - group - item - heading ">' + movie.title + '</h4>' +
-            '</td>' +
-            '</tr>'
-        );
-    });
-}
-
-
 function register() {
     $.ajax({
         type: 'post',
@@ -350,9 +332,9 @@ function getUsers() {
         },
         success: function(data) {
             $.each(data, function(index, value) {
-            	if (value.insert === null) {
-            		value.insert = "-";
-            	} 
+                if (value.insert === null) {
+                    value.insert = "-";
+                }
                 $("#expList").append("<li class='list-group-item glyphicon glyphicon-chevron-down'>  " + value.nickName + "<ul><li>Firstname: " + value.firstName +
                     "</li><li>Lastname: " + value.lastName + "</li>" + "<li>Insert: " + value.insert + "</li></ul></li>");
             });
@@ -363,4 +345,32 @@ function getUsers() {
         }
 
     });
+}
+
+function doRating() {
+    var prevrating = movieontop.rating;
+    var request = 'put';
+    if (typeof prevrating === 'undefined') {
+        request = 'post';
+    }
+    var rating = $("#mymovierating").val();
+    if (rating >= 1 && rating <= 10) {
+        $.ajax({
+            url: 'http://localhost:8080/NotFlix/resources/ratings',
+            data: 'imdb=' + movieontop.imdb + '&rating=' + rating,
+            headers: {
+                'Token': localStorage.getItem("Token")
+            },
+            type: request,
+            success: function(data) {
+                getMovies();
+            },
+            error: function(request, error) {
+                alert('fail: ' + error);
+            }
+
+        });
+    } else {
+        alert("not a good number");
+    }
 }
