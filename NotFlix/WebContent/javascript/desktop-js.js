@@ -59,7 +59,7 @@ function logOut() {
     $("#logout").hide().css("visibility", "hidden");
     $("#registercontainer").show().css('visibility', 'visible');
     $("#usersbutton").hide().css("visibility", "hidden");
-    window.location = "computer.html";
+    window.location = "index.html";
     loggedIn = false;
 }
 
@@ -309,7 +309,7 @@ function getUsers() {
         },
         error: function(request, error) {
             alert("Not logged in or invalid token.");
-            window.location= "computer.html";
+            window.location= "index.html";
         }
 
     });
